@@ -1,82 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
     <title>New&nbsp;&middot;&nbsp;Liyusky</title>
     <link rel="stylesheet" href="./css/bootstrap.css">
-    <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/new.css">
     <script src="./javascript/jquery.min.js"></script>
     <script src="./javascript/bootstrap.js"></script>
 </head>
 
 <body>
-    <header class="container-fluid pad0">
-        <div class="w100 h50 red">
-            <div class="container">
-                <div class="row">
-                    <nav class="col-md-9">
-                        <a href="#">communication</a>
-                        <a href="#">comic</a>
-                        <a href="#">technology</a>
-                        <a href="#">party</a>
-                        <a href="#">game</a>
-                    </nav>
-                    <div class="col-md-3 h50">
-                        <div class="row">
-                            <input type="text" class="col-md-8">
-                            <a href="" class="col-md-4"></a>
-                        </div>
-                    </div>
-                </div>
+    <!-- start header -->
+    <header class="container-fluid bd" style="background-image: url(./images/new-top-bg.png)">
+        <nav class="navbar container-control">
+            <div class="container relative">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#">NEWS</a></li>
+                    <li role="presentation"><a href="#">COMICS</a></li>
+                    <li role="presentation"><a href="#">IT SKILLS</a></li>
+                    <li role="presentation"><a href="#">GUEST BOOKS</a></li>
+                    <li role="presentation"><a href="#">GAMES</a></li>
+                    <li role="presentation"><a href="#">PARTYS</a></li>
+                </ul>
+                <ul class="nav nav-pills keep-right">
+                    <li><a href="">登陆</a></li>
+                    <li><a href="#">/</a></li>
+                    <li><a href="">注册</a></li>
+                </ul>
             </div>
-        </div>
+        </nav>
         <div class="container">
             <div class="row">
-                <figure class="col-md-5 h50">
+                <figure class="col-md-3" style="margin-top:15px;">
                     <a href="">
-                        <img src="" alt="">
+                        <img src="./images/logo.svg" alt="" class="img-responsive" />
                     </a>
                 </figure>
+                <form class=" form col-md-3 col-md-push-6" action="index.html" method="post" style="margin-top:50px;margin-bottom:20px;">
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
             </div>
         </div>
-
     </header>
-    <div class="container-fluid pad0">
-        <div class="w100 h50 red">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-9 h50" id="nav">
-                        nav
-                    </div>
-                    <div class="col-md-3 h50" id="login">
-                        login
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 h50">
-                    <a href="#">
-                        logo
-                        <img src="" alt="" id="logo" />
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 h50">
-                    <p>
-                        <input type="text" name="name" value="">
-                        <a href="#">search</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- end header -->
+
     <div class="container mt50">
         <div class="row">
             <div class="col-md-9">
@@ -166,6 +142,13 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+    $(".nav-tabs a").click(function (e) {
+        e.preventDefault()
+        $(this).tab("show")
+    });
+    </script>
 </body>
 
 </html>
