@@ -1,137 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>comic</title>
+        <link rel="stylesheet" href="./css/bootstrap.css" />
+        <link rel="stylesheet" href="./css/general.css" />
+        <script src="./javascript/jquery.min.js"></script>
+        <script src="./javascript/bootstrap.js"></script>
+    </head>
+    <body>
 
-<head>
-    <meta charset="utf-8">
-    <title>Comic&nbsp;&middot;&nbsp;Liyusky</title>
-    <link rel="stylesheet" href="./css/bootstrap.css">
-    <link rel="stylesheet" href="./css/reset.css">
-    <link rel="stylesheet" href="./css/general.css">
-    <script src="./javascript/jquery.min.js"></script>
-    <script src="./javascript/bootstrap.js"></script>
-</head>
 
-<body>
-  <header class="container-fluid pad0">
-    <div class="w100 h50 red">
-      <div class="container">
-        <div class="row">
-          <nav class="col-md-9 h50" id="nav">
-            nav
-          </nav>
-          <div class="col-md-3 h50" id="login">
-            login
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-5 h50">
-          <a href="#">
-            logo
-            <img src="" alt="" id="logo" />
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 h50">
-          <p>
-            <input type="text" name="name" value="">
-            <a href="#">search</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </header>
-  <div class="container mt50">
-    <div class="row">
-      <div class="col-md-10 h400">
-        <div class="row h200 mlr">
-          <div class="col-md-12 h50" id="title">
-            <div class="big-title">
-
-            </div>
-            <div class="small-title">
-
-            </div>
-          </div>
-          <figure class="col-md-12 h100" id="content">
-            <img src="" alt="" />img
-            <div class="introduction">
-              <p></p>
-            </div>
-          </figure>
-          <div class="col-md-12 h50" id="marker">
+        <!--start container-->
+        <div class="container">
             <div class="row">
-              <div class="col-md-4">
-                发表在
-                <a href="#">xxx目录</a>
-              </div>
-              <div class="col-md-4">
-                标签：关键字
-              </div>
-              <div class="col-md-4">
-                回复数
-              </div>
+                <div class="col-md-8">
+                    <div class="thumbnail center card">
+                        <div class="caption center">
+                            <h2>主标题<a href="#"><span class="badge pull-right">45</span></a></h2>
+                            <p>发表于<a href="#">2016-11-21</a></p>
+                        </div>
+                        <a href="#">
+                            <img alt="image" src="./images/thumbnail.jpg" />
+                        </a>
+                            <div class="caption center">
+                                <p>一些介绍一些介绍一些介绍一些介绍一些介绍一些介绍<a href="#" >继续阅读&rarr;</a></p>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <p>
+                                            <span>发表在</span>
+                                            <a href="#">动画</a>
+                                            <span>|<span>
+                                            <span>标签为</span>
+                                            <a href="#">动漫</a>
+                                            <span>、</span>
+                                            <a href="#">实妹</a>
+                                            <span>|</span>
+                                            <a href="#">45条回复</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="btn">
+                        <button class="btn btn-primary btn-lg">登录</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <aside class="col-md-2 red h200">
-        <form class="row" action="" method="post">
-          <div class="col-md-3">username</div>
-            <div class="col-md-9">
-              <input type="text" name="" id="">
-            </div>
-              <div class="col-md-3">password</div>
-            <div class="col-md-9">
-              <input type="text" name="" id="">
-            </div>
-            <div class="col-md-6">
-              <input type="submit" value="登陆">
-            </div>
-            <div class="col-md-6">
-              <input type="submit" value="注册">
-            </div>
-        </form>
-        <ul class="row h200">
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-          <li class="col-md-12"></li>
-        </ul>
-      </aside>
-    </div>
-  </div>
-  <footer class="container-fluid mt50">
-    <div class="container">
-      <div class="row">
-        <nav class="col-md-9">
-          <ul class="row">
-            <li class="col-md-6 h50">about us</li>
-            <li class="col-md-6 h50">传送门</li>
-          </ul>
-        </nav>
-        <nav class="col-md-3 h50">
-          其他链接方式如qq微信
-        </nav>
-      </div>
-      <div class="row">
-        <div class="col-md-12 h50">
-          许可证
-        </div>
-      </div>
-    </div>
-  </footer>
-</body>
+        <!--end container-->
 
+
+    </body>
 </html>
