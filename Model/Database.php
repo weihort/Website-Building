@@ -1,4 +1,5 @@
 <?php
+namespace Model;
 /**
  * 数据库处理类
  * @className DateBase
@@ -25,10 +26,8 @@ class Database
     function __construct($mark)
     {
         $this->chooseDB($mark);
-        echo "1<br/>";
         $this->connect();
-        echo "2<br/>";
-        //return $this->$dbObj;
+        return $this->dbObj;
     }
 
     /**
@@ -70,10 +69,8 @@ class Database
     private function connect()
     {
         try {
-            $this->dbObj = new PDO($this->dbSite,$this->username,$this->password);
-            echo "connect OK<br/>";
+            $this->dbObj = new \PDO($this->dbSite,$this->username,$this->password);
         } catch (Exception $e) {
-            echo "报错<br/>";
             die("Error!: " . $e->getMessage() . "<br />");
         }
     }
@@ -94,5 +91,3 @@ class Database
     {
     }
 }
-
- ?>

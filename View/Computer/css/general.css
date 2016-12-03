@@ -93,6 +93,34 @@
         }
     /* end 绝对靠右 */
 
+    /* start 上下外边距15px */
+      .margin-vertical-extension{
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+    /* end 上下外边距15px */
+
+    /* start 左右外边距15px */
+      .margin-horizontal-extension{
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+    /* end 左右外边距15px */
+
+    /* start 内边距 */
+      .padding-extension{
+        padding: 20px;
+        margin-left: -20px;
+      }
+    /* end 内边距 */
+
+    /* start 图片大小 */
+      .img-sm{
+        width: 130px;
+        height: 130px;
+      }
+    /* end 图片大小 */
+
     /* start xxx */
     /* end xxx */
 
@@ -123,6 +151,13 @@
     /* end 文字 */
 
     /* start border */
+
+        /* start 有border */
+          .border-exist{
+            border: 1px solid #bbb;
+          }
+        /* end 有border */
+
         /* start 颜色 */
             .border-line-black:{
                 border-bottom-color: #000;
@@ -131,11 +166,16 @@
                 border-bottom-color: #fff;
             }
             .border-line-gray:{
-                border-bottom-color: #aaa;
+                border-bottom-color: #ccc;
             }
         /* end 颜色 */
     /* end border */
 
+    /* start 默认圆角 */
+      .rounded-default{
+        border-radius: 10px;
+      }
+    /* end 圆角 */
 
     /* start xxx */
     /* end xxx */
