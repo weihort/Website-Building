@@ -6,6 +6,14 @@ include "DataBase.Class.php";
 
 class Forum extends DataBase
 {
+    /**
+     * [__construct 连接数据库].
+     * @method   __construct
+     * @param [boolean] $mark [false/调试环境，true/生产环境]
+     * @version  [1.0]
+     * @author liyusky
+     * @datetime 2016-12-12T11:08:33+080
+     */
     function __construct($mark)
     {
         $this->sqlAttr = array('fid'=>null);
@@ -13,9 +21,15 @@ class Forum extends DataBase
         $this->chooseDB($mark);
         $this->connect();
         $this->reviewSelect();
-        return $this->dbObj;
     }
 
+    /**
+     * [reviewSelect 评论查询预处理]
+     * @method   reviewSelect
+     * @version  [1.0]
+     * @author liyusky
+     * @datetime 2016-12-12T11:13:36+080
+     */
     private function reviewSelect()
     {
         try {

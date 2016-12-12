@@ -34,7 +34,6 @@ class Customer extends DataBase
         $this->loginUpdate();
         $this->registerSelect();
         $this->registerInsert();
-        return $this->dbObj;
     }
 
     /**
