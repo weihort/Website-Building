@@ -17,10 +17,11 @@ class Forum extends DataBase
     function __construct($mark)
     {
         $this->sqlAttr = array('fid'=>null);
-        $this->prepareObj = array('reviewSelect'=>null);
+        $this->prepareObj = array('reviewSelectASC'=>null, 'reviewSelectDESC'=>null);
         $this->chooseDB($mark);
         $this->connect();
-        $this->reviewSelect();
+        $this->reviewSelectASC();
+        $this->reviewSelectDESC();
     }
 
     /**
@@ -30,16 +31,33 @@ class Forum extends DataBase
      * @author liyusky
      * @datetime 2016-12-12T11:13:36+080
      */
-    private function reviewSelect()
+    private function reviewSelectASC()
     {
         try {
             $this->dbObj->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->dbObj->beginTransaction();
-            $SQL          = 'SELECT * FROM forum WHERE fid = ?';
+            $SQL          = 'SELECT * FROM forum WHERE fid = ? ORDER BY id ASC';
             $reviewSelect = $this->dbObj->prepare($SQL);
             $reviewSelect->bindParam(1, $this->sqlAttr['fid']);
             $this->dbObj->commit();
-            $this->prepareObj['reviewSelect'] = $reviewSelect;
+            $this->prepareObj['reviewSelectASC'] = $reviewSelect;
+        }
+        catch (Exception $e) {
+            $forum->rollBack();
+            die('Error!: '.$e->getMessage().'<br />');
+        }
+    }
+
+    private function reviewSelectDESC()
+    {
+        try {
+            $this->dbObj->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->dbObj->beginTransaction();
+            $SQL          = 'SELECT * FROM forum WHERE fid = ? ORDER BY id DESC';
+            $reviewSelect = $this->dbObj->prepare($SQL);
+            $reviewSelect->bindParam(1, $this->sqlAttr['fid']);
+            $this->dbObj->commit();
+            $this->prepareObj['reviewSelectDESC'] = $reviewSelect;
         }
         catch (Exception $e) {
             $forum->rollBack();

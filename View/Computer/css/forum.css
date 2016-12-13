@@ -1,0 +1,34 @@
+/*在同一行*/
+.inner {
+  display: inline-block;
+  font-size: 8px;
+}
+
+/*所有按钮无框*/
+.btn {
+  border: none;
+}
+
+/*设置评论输入区顶部背景*/
+.panel-heading {
+  background-color: white;
+}
+
+/*评论输入区顶部间距*/
+.search {
+  margin-top: 30px;
+}
+
+/*评论输入框*/
+.content {
+  width: 330px;
+  height: 60px;
+  overflow: hidden;
+}
+
+/*评论按钮*/
+.searchbtn {
+  width: 60px;
+  height: 60px;
+  text-align: center;
+}
