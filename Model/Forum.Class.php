@@ -1,8 +1,8 @@
 <?php
-namespace Modal\Forum;
-use Modal\DataBase as DataBase;
+namespace Model\Tables;
+use Model\DataBase, PDO;
 header('Content-Type:text/html;charset=utf-8');
-include "DataBase.Class.php";
+include "DataBase.class.php";
 
 class Forum extends DataBase
 {
@@ -16,51 +16,71 @@ class Forum extends DataBase
      */
     function __construct($mark)
     {
-        $this->sqlAttr = array('fid'=>null);
-        $this->prepareObj = array('reviewSelectASC'=>null, 'reviewSelectDESC'=>null);
+        $this->sqlAttr = array('fid'=>null, 'uid'=>null, 'content'=>null);
+        $this->prepareObj = array('replySelectASC'=>null, 'replySelectDESC'=>null, 'replyInsert'=>null);
         $this->chooseDB($mark);
         $this->connect();
-        $this->reviewSelectASC();
-        $this->reviewSelectDESC();
+        $this->replySelectASC();
+        $this->replySelectDESC();
+        $this->replyInsert();
     }
 
     /**
-     * [reviewSelect 评论查询预处理]
-     * @method   reviewSelect
+     * [replySelect 评论查询预处理]
+     * @method   replySelect
      * @version  [1.0]
      * @author liyusky
      * @datetime 2016-12-12T11:13:36+080
      */
-    private function reviewSelectASC()
+    private function replySelectASC()
     {
         try {
-            $this->dbObj->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->dbObj->beginTransaction();
             $SQL          = 'SELECT * FROM forum WHERE fid = ? ORDER BY id ASC';
-            $reviewSelect = $this->dbObj->prepare($SQL);
-            $reviewSelect->bindParam(1, $this->sqlAttr['fid']);
+            $replySelect = $this->dbObj->prepare($SQL);
+            $replySelect->bindParam(1, $this->sqlAttr['fid']);
             $this->dbObj->commit();
-            $this->prepareObj['reviewSelectASC'] = $reviewSelect;
+            $this->prepareObj['replySelectASC'] = $replySelect;
         }
         catch (Exception $e) {
-            $forum->rollBack();
+            $this->dbObj->rollBack();
             die('Error!: '.$e->getMessage().'<br />');
         }
     }
 
-    private function reviewSelectDESC()
+    private function replySelectDESC()
     {
         try {
-            $this->dbObj->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->dbObj->beginTransaction();
             $SQL          = 'SELECT * FROM forum WHERE fid = ? ORDER BY id DESC';
-            $reviewSelect = $this->dbObj->prepare($SQL);
-            $reviewSelect->bindParam(1, $this->sqlAttr['fid']);
+            $replySelect = $this->dbObj->prepare($SQL);
+            $replySelect->bindParam(1, $this->sqlAttr['fid']);
             $this->dbObj->commit();
-            $this->prepareObj['reviewSelectDESC'] = $reviewSelect;
+            $this->prepareObj['replySelectDESC'] = $replySelect;
         }
         catch (Exception $e) {
-            $forum->rollBack();
+            $this->dbObj->rollBack();
+            die('Error!: '.$e->getMessage().'<br />');
+        }
+    }
+
+    private function replyInsert()
+    {
+        try {
+            $this->dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->dbObj->beginTransaction();
+            $SQL          = "INSERT INTO forum(fid, uid, content) VALUES (?, ?, ?)";
+            $replyInsert = $this->dbObj->prepare($SQL);
+            $replyInsert->bindParam(1, $this->sqlAttr['fid']);
+            $replyInsert->bindParam(2, $this->sqlAttr['uid']);
+            $replyInsert->bindParam(3, $this->sqlAttr['content']);
+            $this->dbObj->commit();
+            $this->prepareObj['replyInsert'] = $replyInsert;
+        }
+        catch (Exception $e) {
+            $this->dbObj->rollBack();
             die('Error!: '.$e->getMessage().'<br />');
         }
     }

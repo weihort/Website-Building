@@ -27,7 +27,7 @@ namespace View\Compute
             <h2 class="title-control">
                   这是一个标题
                   <span class="badge pull-right badge-control">42</span>
-                </h2>
+            </h2>
             <a class="media-left" href="#">
               <img src="./images/it-sign.jpg" alt="..." class="img-sm img-rounded">
             </a>

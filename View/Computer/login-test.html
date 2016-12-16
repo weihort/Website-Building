@@ -11,9 +11,7 @@
 
 <body>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    login
-  </button>
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">login</button>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -66,7 +64,7 @@
     alert("密码为不接受引号和空格的10~20位字符串");
     break;
   }
-  getGeolocation();
+  // getGeolocation();
   jQuery('#login-submit').click(function() {
     jQuery.post(
       "../../Controller/getToken.php",

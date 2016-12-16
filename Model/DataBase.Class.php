@@ -1,5 +1,6 @@
 <?php
-namespace Modal;
+namespace Model;
+use PDO;
 header('Content-Type:text/html;charset=utf-8');
 /**
  * 数据库处理类.
@@ -28,20 +29,20 @@ class DataBase
     protected function chooseDB($mark)
     {
         if ($mark) {            /* 生产环境 */
-            $dbms             = 'mysql';
-            $host             = '59.110.6.77:3306';
-            $dbName           = 'bdm252590573_db';
+            $_dbms             = 'mysql';
+            $_host             = '59.110.6.77:3306';
+            $_dbName           = 'bdm252590573_db';
             $this->dbUserName = 'bdm252590573';
             $this->dbPassword = 'LIYUSKY19941104';
         }
         else {                  /* 调试环境 */
-            $dbms             = 'mysql';
-            $host             = '127.0.0.1';
-            $dbName           = 'liyusky';
+            $_dbms             = 'mysql';
+            $_host             = '127.0.0.1';
+            $_dbName           = 'liyusky';
             $this->dbUserName = 'root';
             $this->dbPassword = '111111';
         }
-        $this->dbSite = $dbms.':host='.$host.';dbname='.$dbName;
+        $this->dbSite = $_dbms.':host='.$_host.';dbname='.$_dbName;
     }
 
     /**
@@ -54,7 +55,7 @@ class DataBase
     protected function connect()
     {
         try {
-            $this->dbObj = new \PDO($this->dbSite, $this->dbUserName, $this->dbPassword);
+            $this->dbObj = new PDO($this->dbSite, $this->dbUserName, $this->dbPassword);
             $this->dbObj->query("SET NAMES 'UTF8';");
         } catch (Exception $e) {
             die('Error!: '.$e->getMessage().'<br />');
@@ -72,10 +73,10 @@ class DataBase
      */
     public function selectDB($selectAttr)
     {
-        $role = $this->setAttr($selectAttr);
-        $this->prepareObj[$role]->execute();
-        $result = $this->prepareObj[$role]->fetchAll();
-        return $result;
+        $_role = $this->setAttr($selectAttr);
+        $this->prepareObj[$_role]->execute();
+        $_result = $this->prepareObj[$_role]->fetchAll();
+        return $_result;
     }
 
     /**
@@ -89,9 +90,9 @@ class DataBase
      */
     public function updateDB($updateAttr)
     {
-        $role = $this->setAttr($updateAttr);
-        $flag = $this->prepareObj[$role]->execute();
-        return $flag;
+        $_role = $this->setAttr($updateAttr);
+        $_flag = $this->prepareObj[$_role]->execute();
+        return $_flag;
     }
 
     /**
@@ -105,9 +106,9 @@ class DataBase
      */
     public function insertDB($insertAttr)
     {
-        $role = $this->setAttr($insertAttr);
-        $flag = $this->prepareObj[$role]->execute();
-        return $flag;
+        $_role = $this->setAttr($insertAttr);
+        $_flag = $this->prepareObj[$_role]->execute();
+        return $_flag;
     }
 
     /**
@@ -118,13 +119,13 @@ class DataBase
      * @author liyusky
      * @datetime 2016-12-10T21:10:07+080
      */
-    protected function setAttr($attrArray)
+    private function setAttr($attrArray)
     {
-        $role  = $attrArray['role'];
+        $_role  = $attrArray['role'];
         foreach ($attrArray['data'] as $key => $value) {
             $this->sqlAttr[$key] = $value;
         }
-        return $role;
+        return $_role;
     }
 
 }

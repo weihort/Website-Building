@@ -58,36 +58,36 @@
     var password = jQuery("#register-password").val();
     var confirmPassword = jQuery("#register-confirm-password").val();
     var email = jQuery("#register-email").val();
-    var longitude,latitude;
+    // var longitude,latitude;
     if (!username) {
       alert("请输入用户名");
-      break;
+      return false;
     }
     if (!password) {
       alert("请输入密码");
-      break;
+      return false;
     }
     if (!email) {
       alert("请输入邮箱");
-      break;
+      return false;
     }
     if (password != confirmPassword) {
       alert("请保持密码一致");
-      break;
+      return false;
     }
-    if (!isUsername(username)) {
-      alert("用户名格式不正确，必须以字母开头，接受字母，数字，“_”的10~20位字符串");
-      break;
-    }
-    if (!isPassword(password)) {
-      alert("密码为不接受引号和空格的10~20位字符串");
-      break;
-    }
-    if (!isEmail(email)) {
-      alert("邮箱格式不正确");
-      break;
-    }
-    getGeolocation();
+    // if (!isUsername(username)) {
+    //   alert("用户名格式不正确，必须以字母开头，接受字母，数字，“_”的10~20位字符串");
+    //   return false;
+    // }
+    // if (!isPassword(password)) {
+    //   alert("密码为不接受引号和空格的10~20位字符串");
+    //   return false;
+    // }
+    // if (!isEmail(email)) {
+    //   alert("邮箱格式不正确");
+    //   return false;
+    // }
+    // getGeolocation();
     jQuery.ajax({
       type: "POST",
       url: "../../Controller/register.php",
@@ -95,26 +95,25 @@
         username: username,
         password: password,
         email: email,
-        ip: <?php $_SERVER['REMOTE_ADDR'] ?>,
-        longitude: longitude,
-        latitude : latitude
+        ip: <?php echo strval("'" .$_SERVER['REMOTE_ADDR'] . "'") ?>,
+        // longitude: longitude,
+        // latitude : latitude
       },
-      dataType: 'json',
       timeout: 300,
       success: function(data) {
 
       },
       error: function(xhr, type) {
-        alert('Ajax error!')
+        alert(xhr.type + "      " + xhr.status);
       }
     });
   });
   function isUsername(username){
-    var reg = /^[a-zA-Z|_]{1}+[a-zA-Z|0-9|_]{9,19}/;
+    var reg = /^\w{1}+[\w|\d]{7,19}/;
     return reg.test(username);
   }
   function isPassword(password){
-    var reg = /^([A-Z]|[a-z]|[0-9]|[`-=[];,./~!@#$%^*()_+}{:?]){10,20}$/;
+    var reg = RegExp("^[\S\b|\d]{1}+[\w|\d\|[~!@#$%^&*(){}[].,<>?_+-=]");
     return reg.test(password);
   }
   function isEmail(email){

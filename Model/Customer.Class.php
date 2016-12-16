@@ -1,10 +1,8 @@
 <?php
 
-namespace Model\DataBase;
-use Model;
-
-header('Content-Type:text/html;charset=utf-8');
-
+namespace Model\Tables;
+use Model\DataBase, PDO;
+include 'DataBase.class.php';
 /**
  * 数据库处理类.
  * @className DateBase
@@ -26,7 +24,7 @@ class Customer extends DataBase
      */
     public function __construct($mark)
     {
-        $this->qlAttr = array('username'=>null, 'password'=>null, 'email'=>null, 'mobile'=>null, 'ip'=>null, 'longitude'=>null, 'latitude'=>null);
+        $this->sqlAttr = array('username'=>null, 'password'=>null, 'email'=>null, 'mobile'=>null, 'ip'=>null, 'longitude'=>null, 'latitude'=>null);
         $this->prepareObj = array('loginSelect'=>null, 'loginUpdate'=>null,'registerSelect'=>null, 'registerInsert'=>null);
         $this->chooseDB($mark);
         $this->connect();
@@ -46,14 +44,18 @@ class Customer extends DataBase
     private function loginSelect()
     {
         try {
+            $this->dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->dbObj->beginTransaction();
             $SQL         = 'SELECT * FROM user WHERE username = ? AND password = ?';
             $loginSelect = $this->dbObj->prepare($SQL);
             $loginSelect->bindParam(1, $this->sqlAttr['username']);
             $loginSelect->bindParam(2, $this->sqlAttr['password']);
             $loginSelect->setFetchMode(PDO::FETCH_ASSOC);
+            $this->dbObj->commit();
             $this->prepareObj['loginSelect'] = $loginSelect;
         }
         catch (Exception $e) {
+            $this->dbObj->rollBack();
             die('Error!: '.$e->getMessage().'<br />');
         }
     }
@@ -68,24 +70,30 @@ class Customer extends DataBase
     private function loginUpdate()
     {
         try {
-            $SQL         = '
+            $this->dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->dbObj->beginTransaction();
+            $SQL         = "
                 UPDATE user SET
-                preview_ip = SELECT user(now_ip) FROM user,
-                preview_longitude = SELECT user(now_longitude) FROM user,
-                preview_latitude  = SELECT user(now_latitude) FROM user,
-                now_ip            = ?,
-                now_latitude      = ?,
-                now_longitude     = ?
-                WHERE username    = ?;
-            ';
+                preview_ip        = SELECT now_ip FROM user WHERE username = :username,
+                preview_longitude = SELECT now_longitude FROM user WHERE username = :username,
+                preview_latitude  = SELECT now_latitude FROM user WHERE username = :username,
+                preview_date      = SELECT now_date FROM user WHERE username = :username,
+                logintimes        = SELECT logintimes FROM user WHERE username = :username,
+                now_ip            = :now_ip,
+                now_longitude     = :now_longitude,
+                now_latitude      = :now_latitude
+                WHERE username    = :username;
+            ";
             $loginUpdate = $this->dbObj->prepare($SQL);
-            $loginUpdate->bindParam(1, $this->sqlAttr['ip']);
-            $loginUpdate->bindParam(2, $this->sqlAttr['latitude']);
-            $loginUpdate->bindParam(3, $this->sqlAttr['longitude']);
-            $loginUpdate->bindParam(4, $this->sqlAttr['username']);
-            $this->$prepareObj['loginUpdate'] = $loginUpdate;
+            $loginUpdate->bindParam(':username', $this->sqlAttr['username']);
+            $loginUpdate->bindParam(':now_ip', $this->sqlAttr['ip']);
+            $loginUpdate->bindParam('now_longitude', $this->sqlAttr['longitude']);
+            $loginUpdate->bindParam('now_latitude:', $this->sqlAttr['latitude']);
+            $this->dbObj->commit();
+            $this->prepareObj['loginUpdate'] = $loginUpdate;
         }
         catch (Exception $e) {
+            $this->dbObj->rollBack();
             die('Error!: '.$e->getMessage().'<br />');
         }
     }
@@ -100,13 +108,17 @@ class Customer extends DataBase
     private function registerSelect()
     {
         try {
+            $this->dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->dbObj->beginTransaction();
             $SQL            = 'SELECT * FROM user WHERE username = ?';
             $registerSelect = $this->dbObj->prepare($SQL);
             $registerSelect->bindParam(1, $this->sqlAttr['username']);
             $registerSelect->setFetchMode(PDO::FETCH_ASSOC);
-            $this->$prepareObj['registerSelect'] = $registerSelect;
+            $this->dbObj->commit();
+            $this->prepareObj['registerSelect'] = $registerSelect;
         }
         catch (Exception $e) {
+            $this->dbObj->rollBack();
             die('Error!: '.$e->getMessage().'<br />');
         }
     }
@@ -121,17 +133,21 @@ class Customer extends DataBase
     private function registerInsert()
     {
         try {
-            $SQL            = 'INSERT INTO user(username,password,email,now_ip,now_longitude，now_latitude) VALUES(?,?,?,?,?,?);';
+            $this->dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->dbObj->beginTransaction();
+            $SQL            = 'INSERT INTO user(username, password, email, now_ip, now_longitude, now_latitude) VALUES(?, ?, ?, ?, ?, ?);';
             $registerInsert = $this->dbObj->prepare($SQL);
             $registerInsert->bindParam(1, $this->sqlAttr['username']);
-            $registerInsert->bindParam(1, $this->sqlAttr['password']);
-            $registerInsert->bindParam(1, $this->sqlAttr['email']);
-            $registerInsert->bindParam(1, $this->sqlAttr['ip']);
-            $registerInsert->bindParam(1, $this->sqlAttr['longitude']);
-            $registerInsert->bindParam(1, $this->sqlAttr['latitude']);
-            $this->$prepareObj['registerInsert'] = $registerInsert;
+            $registerInsert->bindParam(2, $this->sqlAttr['password']);
+            $registerInsert->bindParam(3, $this->sqlAttr['email']);
+            $registerInsert->bindParam(4, $this->sqlAttr['ip']);
+            $registerInsert->bindParam(5, $this->sqlAttr['longitude']);
+            $registerInsert->bindParam(6, $this->sqlAttr['latitude']);
+            $this->dbObj->commit();
+            $this->prepareObj['registerInsert'] = $registerInsert;
         }
         catch (Exception $e) {
+            $this->dbObj->rollBack();
             die('Error!: '.$e->getMessage().'<br />');
         }
     }

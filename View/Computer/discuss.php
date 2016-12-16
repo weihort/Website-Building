@@ -1,42 +1,45 @@
 <?php
 namespace View;
+
 use Controller;
-session_start();
-define("ROOT_PATH",dirname(dirname(dirname(__FILE__))));
-$_SESSION['ROOT_PATH'] = ROOT_PATH;
-include ROOT_PATH . "/Controller/forum.php";
+
+include ROOT_PATH.'/Controller/forum.php';
  ?>
- <!DOCTYPE html>
-  <html>
+    <!DOCTYPE html>
+    <html>
+
     <head>
-      <meta charset="utf-8">
-      <title>评论页面</title>
-      <link rel="stylesheet" href="../Computer/css/bootstrap.min.css">
-      <link rel="stylesheet" href="../Computer/css/forum.css">
+        <meta charset="utf-8">
+        <title>评论页面</title>
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/forum.css">
+        <script src="./javascript/jquery.min.js" charset="utf-8"></script>
     </head>
+
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-6 panel panel-default">
-                    <div class="row search">
-                      <div class="col-md-1"></div>
-                      <div class="col-md-9">
-                        <div class="row">
-                          <div class="col-md-2">
-                            <img src="#" />
-                          </div>
-                          <div class="col-md-8">
-                            <textarea class="content"></textarea>
-                          </div>
-                          <div>
-                            <button class="btn btn-primary searchbtn inner"><p>发表<br/>评论</p></button>
-                          </div>
+                    <!--头部搜索框-->
+                    <div class="container-fluid">
+                        <div class="row search">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-9 container-fluid">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="#" />
+                                    </div>
+                                    <div class="col-md-10">
+                                        <textarea class="content"></textarea>
+                                        <button class="btn btn-primary searchbtn inner"><p>发表</p></button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
                         </div>
-                        <div class="col-md-2"></div>
-                      </div>
                     </div>
-
+                    <!--结束头部搜索框-->
                     <hr/>
 
                     <?php echo $contentStr; ?>
@@ -45,5 +48,56 @@ include ROOT_PATH . "/Controller/forum.php";
                 <div class="col-md-2"></div>
             </div>
         </div>
+        <script type="text/javascript">
+            var jqReviewDoms = jQuery(".review");
+            var
+            var preDom = null;
+            jqReviewDoms.each(function() {
+                var jqThis = jQuery(this);
+                jqThis.click(function() {
+                    if (preDom != null && !jqThis.attr('data-this')) {
+                        preDom.attr('data-open',"1");
+                        preDom.attr('data-this',"");
+                        preDom.parent().next().remove();
+                    }
+                    if (jqThis.attr('data-open') && !jqThis.attr('data-this')) {
+                        jqThis.attr('data-this',"1");
+                        jqThis.parent().after(
+                            "<div id='reply' class='container-fluid'><div class='row search'><div class='col-md-1'></div><div class='col-md-9 container-fluid'>"+
+                            "<div class='row'><div class='col-md-2'><img src='#' /></div><div class='col-md-10'><textarea class='content' id='midst-content'></textarea>"+
+                            "<button class='btn btn-primary searchbtn inner'><p click='sendReply()'>发表</p></button></div></div><div class='col-md-2'></div></div></div></div>"
+                        );
+                        jqThis.attr('data-open',"");
+                    }
+                    else {
+                        jqThis.parent().next().remove();
+                        jqThis.attr('data-open',"1");
+                        jqThis .attr('data-this',"");
+                    }
+                    preDom = jqThis;
+                });
+            });
+            function sendReply () {
+                var content        = jQuery("#midst-content").val();
+                var fatherUserName = preDom.parent().parent().find("data-reply='father-username'").html();
+                jQuery.ajax({
+                    type : 'POST',
+                    url : '../../Controller/get_reply.php',
+                    data: {
+                        fatherUserName : fatherUserName,
+                        content : content
+                    },
+                    dataType: 'json',
+                    timeout: 300,
+                    success: function(data) {
+                        token = null;
+                    },
+                    error: function(xhr, type) {
+                        alert('Ajax error!');
+                    }
+                });
+            }
+        </script>
     </body>
- </html>
+
+    </html>
