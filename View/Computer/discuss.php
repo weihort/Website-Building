@@ -50,7 +50,6 @@ include ROOT_PATH.'/Controller/forum.php';
         </div>
         <script type="text/javascript">
             var jqReviewDoms = jQuery(".review");
-            var
             var preDom = null;
             jqReviewDoms.each(function() {
                 var jqThis = jQuery(this);

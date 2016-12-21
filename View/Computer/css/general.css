@@ -56,8 +56,7 @@
 /* start 布局 */
 
     /* start 水平居中 */
-        .horizontal-center
-        {
+        .horizontal-center{
             margin: auto;
         }
     /* end 水平居中 */
@@ -119,6 +118,11 @@
         width: 130px;
         height: 130px;
       }
+      .portrait{
+          width: 70px;
+          height: 70px;
+          margin-top: 2px;
+      }
     /* end 图片大小 */
 
     /* start xxx */
@@ -177,6 +181,23 @@
       }
     /* end 圆角 */
 
+    /* start 表单元素 */
+
+        /* start textarea */
+            .textarea-control{
+                resize: none;
+                overflow: hidden;
+            }
+        /* end textarea */
+
+    /* end 表单元素 */
+
+
+
+
+    /* start xxx */
+    /* end xxx */
+
     /* start xxx */
     /* end xxx */
 
@@ -186,8 +207,7 @@
 /* start 组件 */
 
     /* start 背景 */
-        .bg
-        {
+        .bg{
             position: fixed;
             z-index: -1;
             top: 0;
@@ -207,8 +227,7 @@
     /* start 分割线 */
 
         /* start 中等 */
-            .split-line-md
-            {
+            .split-line-md{
                 width: 70%;
                 margin: 5px auto;
 
@@ -219,8 +238,7 @@
         /* end 中等 */
 
         /* start 全图 */
-            .split-line-lg
-            {
+            .split-line-lg{
                 width: 100%;
                 margin: 5px auto;
 
@@ -231,5 +249,27 @@
         /* end 全图 */
 
     /* end 分割线 */
+
+
+    /* start 按钮 */
+        .btn-deliver {
+            width: 70px;
+            height: 70px;
+            margin-top: 2px;
+            line-height: 56px;
+        }
+    /* end 按钮 */
+
+    /* start 浮现 */
+        .appear:hover .appear-target {
+            display: inline-block;
+        }
+        .appear-target{
+            display: none;
+        }
+    /* end 浮现 */
+
+    /* start xxx */
+    /* end xxx */
 
 /* end 组件 */
