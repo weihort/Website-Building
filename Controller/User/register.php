@@ -1,9 +1,9 @@
 <?php
 
-namespace Controller\User;
+namespace \Controller\User;
 
-use Model\Tables\Customer;
-use PDO;
+use \Model\Tables\Customer;
+use \PDO;
 
 // include '../Model/Customer.class.php';
 header('Content-Type:text/html;charset=utf-8');

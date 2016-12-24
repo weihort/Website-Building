@@ -1,3 +1,7 @@
+<?php
+namespace \View\Computer
+ ?>
+
 <!DOCTYPE html>
 <html lang="zh-cn">
 
@@ -67,22 +71,21 @@
   // getGeolocation();
   jQuery('#login-submit').click(function() {
     jQuery.post(
-      "../../Controller/getToken.php",
-      {ip:ip},
+      "../../Controller/Safe/token.php",
       function(data,status) {
         token = data;
       }
     );
     jQuery.ajax({
       type: "POST",
-      url: "../../Controller/login.php",
+      url: "../../Controller/User/login.php",
       data: {
         token : token,
         username: username,
         password: password,
         ip: ip,
-        longitude: longitude,
-        latitude : latitude
+        longitude: "longitude",
+        latitude : "latitude"
       },
       dataType: 'json',
       timeout: 300,
@@ -94,24 +97,24 @@
       }
     });
   });
-  function getGeolocation(longitude,latitude) {
-    var map = new BMap.Map("allmap");
-    var geolocation = new BMap.Geolocation();
-    geolocation.getCurrentPosition(
-      function(r) {
-        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-          longitude = r.point.lng;
-          latitude = r.point.lat;
-        }
-        else {
-          alert('failed' + this.getStatus());
-        }
-      },
-      {
-        enableHighAccuracy: true
-      }
-    );
-  }
+  // function getGeolocation(longitude,latitude) {
+  //   var map = new BMap.Map("allmap");
+  //   var geolocation = new BMap.Geolocation();
+  //   geolocation.getCurrentPosition(
+  //     function(r) {
+  //       if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+  //         longitude = r.point.lng;
+  //         latitude = r.point.lat;
+  //       }
+  //       else {
+  //         alert('failed' + this.getStatus());
+  //       }
+  //     },
+  //     {
+  //       enableHighAccuracy: true
+  //     }
+  //   );
+  // }
 </script>
 
 </html>

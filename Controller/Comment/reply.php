@@ -1,8 +1,8 @@
 <?php
-namespace Controller\Comment;
+namespace \Controller\Comment;
 
-use Modal\Tables\Forum;
-use PDO;
+use \Modal\Tables\Forum;
+use \PDO;
 
 include $_SESSION["ROOT_PATH"] . '/Model/Forum.class.php ';
 header('Content-Type:text/html;charset=utf-8');

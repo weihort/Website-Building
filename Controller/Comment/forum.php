@@ -1,9 +1,9 @@
 <?php
 
-namespace Controller\Comment;
+namespace \Controller\Comment;
 
-use Model\Tables\Forum;
-use PDO;
+use \Model\Tables\Forum;
+use \PDO;
 
 //引入要实例化的类
 include '../Model/Forum.class.php ';

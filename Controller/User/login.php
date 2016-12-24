@@ -1,8 +1,8 @@
 <?php
-namespace Controller\User;
+namespace \Controller\User;
 
-use Model\Tables\Customer;
-use PDO;
+use \Model\Tables\Customer;
+use \PDO;
 
 // include '../Model/Customer.class.php';
 session_start();
