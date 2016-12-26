@@ -1,0 +1,312 @@
+.h40
+{
+    height: 40px;
+}
+.h50
+{
+    height: 50px;
+}
+.h60
+{
+    height: 60px;
+}
+.h400
+{
+    height: 400px;
+}
+.h1000
+{
+    height: 1000px;
+}
+.w100
+{
+    width: 100%;
+}
+.red
+{
+    background: red;
+}
+.pad0
+{
+    padding: 0;
+}
+.mt50
+{
+    margin-top: 50px;
+}
+.mlr
+{
+    margin-top: 15px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.h200
+{
+    height: 200px;
+}
+.h100
+{
+    height: 100px;
+}
+
+/* start xxx */
+/* end xxx */
+
+
+/* start 布局 */
+
+    /* start 水平居中 */
+        .horizontal-center{
+            margin: auto;
+        }
+    /* end 水平居中 */
+
+    /* start 底部固定 */
+        .fixed-bottom{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-bottom: 0;
+        }
+    /* end 底部固定 */
+
+    /* start 列充满 */
+        .container-control{
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+    /* end 列充满 */
+
+    /* start 相对定位 */
+        .relative{
+            position: relative;
+        }
+    /* end 相对定位 */
+
+    /* start 绝对靠右 */
+        .keep-right{
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    /* end 绝对靠右 */
+
+    /* start 上下外边距15px */
+      .margin-vertical-extension{
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+    /* end 上下外边距15px */
+
+    /* start 左右外边距15px */
+      .margin-horizontal-extension{
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+    /* end 左右外边距15px */
+
+    /* start 内边距 */
+      .padding-extension{
+        padding: 20px;
+        margin-left: -20px;
+      }
+    /* end 内边距 */
+
+    /* start 图片大小 */
+      .img-sm{
+        width: 130px;
+        height: 130px;
+      }
+      .portrait{
+          width: 70px;
+          height: 70px;
+          margin-top: 2px;
+      }
+    /* end 图片大小 */
+
+    /* start xxx */
+    /* end xxx */
+
+/* end 布局 */
+
+/* start ui */
+
+    /* start 文字 */
+
+        /* start 居中 */
+            .text-center{
+                text-align: center;
+            }
+        /* end 居中 */
+
+        /* start 颜色 */
+            .write-color{
+                color: #fff;
+            }
+        /* end 颜色 */
+
+        /* start 下划线 */
+            .no-down-line{
+                text-decoration: none;
+            }
+        /* end 下划线 */
+
+    /* end 文字 */
+
+    /* start border */
+
+        /* start 有border */
+          .border-exist{
+            border: 1px solid #bbb;
+          }
+        /* end 有border */
+
+        /* start 颜色 */
+            .border-line-black:{
+                border-bottom-color: #000;
+            }
+            .border-line-write:{
+                border-bottom-color: #fff;
+            }
+            .border-line-gray:{
+                border-bottom-color: #ccc;
+            }
+        /* end 颜色 */
+    /* end border */
+
+    /* start 默认圆角 */
+      .rounded-default{
+        border-radius: 10px;
+      }
+    /* end 圆角 */
+
+    /* start 表单元素 */
+
+        /* start textarea */
+            .textarea-control{
+                resize: none;
+                overflow: hidden;
+            }
+        /* end textarea */
+
+    /* end 表单元素 */
+
+
+
+
+    /* start xxx */
+    /* end xxx */
+
+    /* start xxx */
+    /* end xxx */
+
+
+/* end ui */
+
+/* start 组件 */
+
+    /* start 背景 */
+        .bg{
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: black;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            -webkit-background-size: cover;
+                    background-size: cover;
+        }
+    /* end 背景 */
+
+    /* start 分割线 */
+
+        /* start 中等 */
+            .split-line-md{
+                width: 70%;
+                margin: 5px auto;
+
+                border: 0;
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+            }
+        /* end 中等 */
+
+        /* start 全图 */
+            .split-line-lg{
+                width: 100%;
+                margin: 5px auto;
+
+                border: 0;
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+            }
+        /* end 全图 */
+
+    /* end 分割线 */
+
+
+    /* start 按钮 */
+        .btn-deliver {
+            width: 70px;
+            height: 70px;
+            margin-top: 2px;
+            line-height: 56px;
+        }
+    /* end 按钮 */
+
+    /* start 浮现 */
+        .appear:hover .appear-target {
+            display: inline-block;
+        }
+        .appear-target{
+            display: none;
+        }
+    /* end 浮现 */
+
+    /* start xxx */
+    /* end xxx */
+
+/* end 组件 */
+
+/*start login页面样式*/
+  /*start logo距离顶部空间*/
+  .top-margin{
+    margin-top: 80px;
+  }
+  /*end logo距离顶部空间*/
+  /*start字体浮动向右*/
+    .f-right{
+      float: right;
+    }
+  /*end字体浮动向右*/
+  /*start login按钮样式*/
+    .login-margin
+    {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+  /*end login按钮样式*/
+  /*start download APP按钮样式*/
+  .download
+  {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  /*end download APP按钮样式*/
+  /*start bottom紧贴底部*/
+    .keep-bottom
+    {
+      position: absolute;
+      left: 30%;
+      right: 30%;
+      bottom: 0;
+      margin: 0 auto;
+    }
+  /*end bottom紧贴底部*/
+/*end login页面样式*/

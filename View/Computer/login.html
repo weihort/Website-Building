@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>鲤鱼旗</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/general.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row index-main">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div class="index-main-header text-center top-margin">
+            <h1 class="logo">鲤鱼旗</h1>
+            <h4 class="subhead">一起快乐地讨论吧！</h4>
+          </div>
+          <div class="index-main-body">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a class="btn "href="#signup" data-toggle="tab">登录</a>
+              </li>
+              <li>
+                <a href="#signin" data-toggle="tab">注册</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade in active" id="signup">
+                <form method="post" action="#">
+                  <input class="form-control" name="username" type="text" placeholder="用户名或邮箱">
+                  <input class="form-control" name="password" type="text" placeholder="密码">
+                  <input class="btn btn-primary form-control login-margin" value="登录" type="button">
+                </form>
+                <div>
+                  <p>
+                    <a class="" href="#">手机验证码登录</a>
+                    <a class="f-right" href="#">无法登录？</a>
+                  </p>
+                  <p>
+                    <a href="#">社交账号登录</a>
+                  </p>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="signin">
+                <form method="post" action="#">
+                  <input class="form-control" name="username" type="text" placeholder="用户名">
+                  <input class="form-control" name="邮箱" type="text" placeholder="邮箱">
+                  <input class="form-control" name="密码" type="text" placeholder="密码">
+                  <input class="form-control" name="验证码" type="text" placeholder="验证码">
+                  <input class="btn btn-primary form-control login-margin" value="注册" type="button">
+                </form>
+                <div>
+                  <p>
+                    <span>点击&#91;注册&#93;按钮，即代表你同意</span>
+                    <a href="#">《本站协议》</a>
+                  </p>
+                </div>
+              </div>
+              <a class="btn btn-default form-control download">下载APP</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+      <div class="footer">
+        <p class="text-center keep-bottom">
+          <span>&copy; 2016 鲤鱼旗</span>
+          <span class="dot">·</span>
+          <a target="_blank" href="#">发现</a>
+          <span class="dot">·</span>
+          <a target="_blank" href="#">联系我们</a>
+          <br>
+          <a href="http://www.miibeian.gov.cn/" target="_blank">京 ICP 证 110745 号</a>
+          <span class="dot">·</span>
+          <span>京公网安备 11010802010035 号</span>
+          <span class="dot">·</span>
+          <a href="#" target="_blank">出版物经营许可证</a>
+        </p>
+      </div>
+    </div>
+    <script src="./javascript/jquery.min.js"></script>
+    <script src="./javascript/bootstrap.js"></script>
+  </body>
+</html>
