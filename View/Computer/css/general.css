@@ -1,59 +1,43 @@
-.h40
-{
-    height: 40px;
-}
-.h50
-{
-    height: 50px;
-}
-.h60
-{
-    height: 60px;
-}
-.h400
-{
-    height: 400px;
-}
-.h1000
-{
-    height: 1000px;
-}
-.w100
-{
-    width: 100%;
-}
-.red
-{
-    background: red;
-}
-.pad0
-{
-    padding: 0;
-}
-.mt50
-{
-    margin-top: 50px;
-}
-.mlr
-{
-    margin-top: 15px;
-    margin-right: 15px;
-    margin-left: 15px;
-}
-.h200
-{
-    height: 200px;
-}
-.h100
-{
-    height: 100px;
-}
 
-/* start xxx */
-/* end xxx */
+/* start reset */
+  a:link{
+    text-decoration:none;
+  }
+  a{
+    text-decoration: none;
+  }
+/* end reset */
 
 
 /* start 布局 */
+
+    /* start display */
+
+      /* start none */
+        .none{
+          display: none;
+        }
+      /* end none */
+
+      /* start block */
+        .block{
+          display: block;
+        }
+      /* end block */
+
+      /* start inline */
+        .inline{
+          display: inline;
+        }
+      /* end inline */
+
+      /* start inline-block */
+        .inline-block{
+          display: inline-block;
+        }
+      /* end inline-block */
+
+    /* end display */
 
     /* start 水平居中 */
         .horizontal-center{
@@ -151,6 +135,15 @@
                 text-decoration: none;
             }
         /* end 下划线 */
+
+        /* start 隐藏溢出 */
+          .overflow-hidden{
+            overflow: hidden;
+          }
+        /* end 隐藏溢出 */
+
+        /* start xxx */
+        /* end xxx */
 
     /* end 文字 */
 
@@ -277,7 +270,7 @@
 /*start login页面样式*/
   /*start logo距离顶部空间*/
   .top-margin{
-    margin-top: 80px;
+    margin-top: 120px;
   }
   /*end logo距离顶部空间*/
   /*start字体浮动向右*/
@@ -309,4 +302,23 @@
       margin: 0 auto;
     }
   /*end bottom紧贴底部*/
+
+  /*start图标样式*/
+    .icon{
+      font-size: 22px;
+    }
+  /*end图标样式*/
+
+  /* start 登录按钮美化 */
+    .btn-beautify{
+      font-size: 20px;
+    }
+    .btn-beautify:link{
+      text-decoration:none;
+    }
+    .btn-beautify:hover{
+        text-decoration:none;
+      }
+  /* end 登录按钮美化 */
+
 /*end login页面样式*/
