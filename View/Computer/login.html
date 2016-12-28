@@ -18,15 +18,15 @@
           </div>
           <div>
             <ul class="nav-pills login-margin list-unstyled text-center nav">
-              <a class="active btn btn-link btn-beautify" href="#signup" data-toggle="tab">登录</a>
-              <a class="btn btn-link btn-beautify" href="#signin" data-toggle="tab">注册</a>
+              <a class="active btn btn-link btn-beautify view-color" id="switch-in" data-switch="1" data-toggle="tab" href="#signup">登录</a>
+              <a class="btn btn-link btn-beautify leave-color" id="switch-up" data-switch="0" data-toggle="tab" href="#signin">注册</a>
             </ul>
             <div class="tab-content login-margin">
               <div class="tab-pane fade in active" id="signup">
                 <form>
-                  <input class="form-control login-margin" id="username" name="username" type="text" placeholder="用户名">
-                  <input class="form-control login-margin" id="password" name="password" type="text" placeholder="密码">
-                  <a class="btn btn-primary form-control login-margin" name="登录" type="button" onclick="judge()">登录</a>
+                  <input class="form-control login-margin" id="in-username" name="username" type="text" placeholder="用户名">
+                  <input class="form-control login-margin" id="in-password" name="password" type="text" placeholder="密码">
+                  <a class="btn btn-primary form-control login-margin" name="登录" type="button" onclick="login()">登录</a>
                 </form>
                 <p>
                   <a class="" href="#">手机验证码登录</a>
@@ -47,10 +47,10 @@
               </div>
               <div class="tab-pane fade" id="signin">
                 <form>
-                  <input class="form-control login-margin" name="username" type="text" placeholder="用户名">
-                  <input class="form-control login-margin" name="mail" type="text" placeholder="邮箱">
-                  <input class="form-control login-margin" name="password" type="text" placeholder="密码">
-                  <a class="btn btn-primary form-control login-margin" name="注册" type="button">注册</a>
+                  <input class="form-control login-margin" id="up-username" name="username" type="text" placeholder="用户名">
+                  <input class="form-control login-margin" id="mail" name="mail" type="text" placeholder="邮箱">
+                  <input class="form-control login-margin" id="up-password" name="password" type="text" placeholder="密码">
+                  <a class="btn btn-primary form-control login-margin" name="注册" type="button" onclick="logup()">注册</a>
                 </form>
                 <div>
                   <p>
@@ -73,7 +73,7 @@
           <span class="dot">·</span>
           <a target="_blank" href="#">联系我们</a>
           <br>
-          <a href="http://www.miibeian.gov.cn/" target="_blank">京 ICP 证 110745 号</a>
+          <a href="#" target="_blank">京 ICP 证 110745 号</a>
           <span class="dot">·</span>
           <span>京公网安备 11010802010035 号</span>
           <span class="dot">·</span>
@@ -103,29 +103,64 @@
              return reg.test(userName);
            }
         /**
+         * [检查email地址是否正确]
+         * @param  {[string]} mailAddress [从email输入框获得的值]
+         * @return {[boolean]}             [决定输入的值是否提交]
+         */
+         function checkMail(mailAddress){
+         var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+         return reg.test(mailAddress);
+           }
+        /**
          * [判断用户名密码格式]
          * @return                         {[boolean]} [允许或阻止数据的提交]
-         * @method@author@version@datetime
+         * @method
+         * @author
+         * @version
+         * @datetime
          */
-        function judge(){
-          var userName = document.getElementById('username').value;
+        function login(){
+          var userName = document.getElementById('in-username').value;
           if(!checkUserName(userName))
           {
               alert("用户名不正确！")
               return false;
           }
-          var password = document.getElementById('password').value;
+          var password = document.getElementById('in-password').value;
           if(!checkPassword(password))
           {
               alert("密码不正确！")
               return false;
           }
         }
-        // function toggle(){
-        //     $("#hide").animate({
-        //         width:'toggle'
-        //     });
-        // }
+        /**
+         * [此函数在注册时确定输入格式的正确与否]
+         * @return {[boolean]} [返回的布尔值视情况而提交]
+         */
+        function logup(){
+            var userName = document.getElementById('up-username').value;
+            if(!checkUserName(userName))
+            {
+                alert("用户名不正确！")
+                return false;
+            }
+            var password = document.getElementById('up-password').value;
+            if(!checkPassword(password))
+            {
+                alert("密码不正确！")
+                return false;
+            }
+            var mailAddress =document.getElementById('mail').value;
+            if(!checkMail(mailAddress))
+            {
+              alert("邮箱地址不正确！")
+              return false;
+            }
+        }
+        /**
+         * [此函数隐藏或开启社交媒体登录选项框]
+         * @return {[none]} [仅仅发生一种行为]
+         */
         function openBox(){
             if ($("#hide").attr('class') == "overflow-hidden none row"){
                 $("#hide").attr("class","overflow-hidden inline-block");
@@ -136,6 +171,35 @@
                 $("#hide").attr("class","overflow-hidden none row");
             }
         }
+        /**
+         * [此函数执行点击登录、注册两按钮时颜色切换]
+         * @return {[none]} 
+         */
+        function logSwitch(){
+            //点击登录按钮后所执行
+            $("#switch-in").click(function() {
+                $(this).attr({
+                    "data-switch" : "1",
+                    "class" : "active btn btn-link btn-beautify view-color"
+                });
+                $("#switch-up").attr({
+                    "data-switch" : "0",
+                    "class" : "btn btn-link btn-beautify leave-color"
+                });
+            });
+            //点击注册按钮后所执行
+            $("#switch-up").click(function() {
+                $(this).attr({
+                    "data-switch" : "1",
+                    "class" : "btn btn-link btn-beautify view-color"
+                });
+                $("#switch-in").attr({
+                    "data-switch" : "0",
+                    "class" : "active btn btn-link btn-beautify leave-color"
+                });
+            });
+        }
+        logSwitch();
     </script>
   </body>
 </html>

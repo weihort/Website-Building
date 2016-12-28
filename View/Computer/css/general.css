@@ -309,16 +309,23 @@
     }
   /*end图标样式*/
 
-  /* start 登录按钮美化 */
+  /* start 登录按钮切换美化 */
     .btn-beautify{
       font-size: 20px;
+      font-weight: bolder;
     }
     .btn-beautify:link{
       text-decoration:none;
     }
     .btn-beautify:hover{
         text-decoration:none;
-      }
-  /* end 登录按钮美化 */
+    }
+    .view-color{
+      color: #555;
+    }
+    .leave-color{
+      color: #0f88eb;
+    }
+  /* end 登录按钮切换美化 */
 
 /*end login页面样式*/
