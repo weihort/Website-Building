@@ -1,6 +1,6 @@
-<?php
-namespace \View\Computer
- ?>
+<!-- <?php
+// namespace \View\Computer
+ ?> -->
 
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -72,7 +72,7 @@ namespace \View\Computer
   jQuery.post(
     "../../Controller/Safe/token.php",
     function(data,status) {
-        console.log(data);
+        alert(data);
     }
   );
   jQuery('#login-submit').click(function() {
