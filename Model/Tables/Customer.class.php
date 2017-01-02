@@ -1,10 +1,9 @@
 <?php
 namespace Model\Tables;
 
-use Model\DataBase;
+use \Model\DataBase;
 use PDO;
-
-// include 'DataBase.class.php';
+include $_SESSION['ROOT_DIRECTORY'] . '/Model/DataBase.class.php';
 /**
  * 数据库处理类.
  * @className DateBase
@@ -27,7 +26,7 @@ class Customer extends DataBase
     public function __construct($Mark)
     {
         $this->arguments = array('username'=>null, 'password'=>null, 'email'=>null, 'mobile'=>null, 'ip'=>null, 'longitude'=>null, 'latitude'=>null);
-        $this->goals  = array('loginSelect'=>null, 'loginUpdate'=>null,'registerSelect'=>null, 'registerInsert'=>null);
+        $this->goals     = array('loginSelect'=>null, 'loginUpdate'=>null,'registerSelect'=>null, 'registerInsert'=>null);
         $this->chooseBase($Mark);
         $this->connectBase();
         $this->loginSelect();
@@ -48,10 +47,9 @@ class Customer extends DataBase
         try {
             $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->base->beginTransaction();
-            $_sql         = 'SELECT * FROM user WHERE username = ? AND password = ?';
+            $_sql          = 'SELECT * FROM user WHERE username = ?';
             $_login_select = $this->base->prepare($_sql);
             $_login_select->bindParam(1, $this->arguments['username']);
-            $_login_select->bindParam(2, $this->arguments['password']);
             $_login_select->setFetchMode(PDO::FETCH_ASSOC);
             $this->base->commit();
             $this->goals['loginSelect'] = $_login_select;
@@ -74,7 +72,7 @@ class Customer extends DataBase
         try {
             $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->base->beginTransaction();
-            $_sql = "
+            $_sql          = "
                 UPDATE user SET
                 preview_ip        = now_ip,
                 preview_longitude = now_longitude,
@@ -113,7 +111,7 @@ class Customer extends DataBase
         try {
             $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->base->beginTransaction();
-            $_sql            = 'SELECT * FROM user WHERE username = ?';
+            $_sql             = 'SELECT * FROM user WHERE username = ?';
             $_register_select = $this->base->prepare($_sql);
             $_register_select->bindParam(1, $this->arguments['username']);
             $_register_select->setFetchMode(PDO::FETCH_ASSOC);
@@ -138,7 +136,7 @@ class Customer extends DataBase
         try {
             $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->base->beginTransaction();
-            $_sql            = 'INSERT INTO user(username, password, email, now_ip, now_longitude, now_latitude) VALUES(?, ?, ?, ?, ?, ?);';
+            $_sql             = 'INSERT INTO user(username, password, email, now_ip, now_longitude, now_latitude) VALUES(?, ?, ?, ?, ?, ?);';
             $_register_insert = $this->base->prepare($_sql);
             $_register_insert->bindParam(1, $this->arguments['username']);
             $_register_insert->bindParam(2, $this->arguments['password']);

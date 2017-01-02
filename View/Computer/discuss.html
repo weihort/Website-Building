@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <img src="./images/logo.svg" alt="" />
     <div class="container">
         <div class="row">
             <div class="col-md-9">
@@ -23,7 +24,7 @@
                         <textarea class="form-control textarea-control" rows="3"></textarea>
                     </div>
                     <div class="col-md-2">
-                        <a href="#" class="btn btn-primary btn-deliver" data-title="1" onclick="javascript:setComment(jQuery(this));">发表</a>
+                        <a href="#" class="btn btn-primary btn-deliver" data-title="1" data-id="1" onclick="javascript:setComment(jQuery(this));">发表</a>
                     </div>
                 </div>
                 <!-- e 评论填写框 -->
@@ -39,7 +40,7 @@
                               <a href="#">用户one</a>
                             </h4>
                             <p>这里是评论</p>
-                            <div class="row appear">
+                            <div data-id="0" class="row appear">
                                 <div class="col-md-1">
                                     <span class="btn">#1</span>
                                 </div>
@@ -50,10 +51,10 @@
                                     <a class="btn btn-link" data-agree="1" onclick="javascript:agree(jQuery(this));">赞&nbsp;&#40;<span>12</span>&#41;</a>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn btn-link" data-open="1" data-level="1" onclick="javascript:setReply(jQuery(this));">回复</a>
+                                    <a class="btn btn-link" data-open="1" data-id="0" data-level="1" onclick="javascript:setReply(jQuery(this));">回复</a>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn btn-link" onclick="javascript:deleteMedia(jQuery(this));">删除</a>
+                                    <a class="btn btn-link" onclick="javascript:deleteComment(jQuery(this));">删除</a>
                                 </div>
                                 <div class="col-md-2">
                                     <a class="btn btn-link appear-target">举报</a>
@@ -69,7 +70,7 @@
                                       <a href="#">用户two</a>
                                     </h4>
                                     <p>这里是评论</p>
-                                    <div class="row appear">
+                                    <div data-id="0" class="row appear">
                                         <div class="col-md-3">
                                             <span class="btn">2016-12-12&nbsp;11:23</span>
                                         </div>
@@ -80,7 +81,7 @@
                                             <a class="btn btn-link" data-open="1" onclick="javascript:setReply(jQuery(this));">回复</a>
                                         </div>
                                         <div class="col-md-2">
-                                            <a class="btn btn-link" onclick="javascript:deleteMedia(jQuery(this));">删除</a>
+                                            <a class="btn btn-link" onclick="javascript:deleteComment(jQuery(this));">删除</a>
                                         </div>
                                         <div class="col-md-2">
                                             <a class="btn btn-link appear-target">举报</a>
@@ -99,7 +100,7 @@
                                       <a href="#">用户three</a>
                                     </h4>
                                     <p>这里是评论</p>
-                                    <div class="row appear">
+                                    <div data-id="0" class="row appear">
                                         <div class="col-md-3">
                                             <span class="btn">2016-12-12&nbsp;11:23</span>
                                         </div>
@@ -110,7 +111,7 @@
                                             <a class="btn btn-link" data-open="1" onclick="javascript:setReply(jQuery(this));">回复</a>
                                         </div>
                                         <div class="col-md-2">
-                                            <a class="btn btn-link" onclick="javascript:deleteMedia(jQuery(this));">删除</a>
+                                            <a class="btn btn-link" onclick="javascript:deleteComment(jQuery(this));">删除</a>
                                         </div>
                                         <div class="col-md-2">
                                             <a class="btn btn-link appear-target" onclick="javascript:report();">举报</a>
@@ -130,12 +131,14 @@
     </div>
     <script src="./javascript/jquery.min.js"></script>
     <script type="text/javascript">
-        var meidaList = jQuery(".media-list");
+        var meidaList   = jQuery(".media-list");
         var replyBoxDom = replyBox();
-        var preDom = null;
-        var fatherName = null;
-        var level = null;
-        var floor = 0;
+        var preDom      = null;
+        var fatherName  = null;
+        var level       = null;
+        var floor       = 0;
+        var commentId   = 0;
+        var uid         = 0;
 
         /**
          * [setComment 添加评论]
@@ -146,42 +149,53 @@
          * @datetime 2016-12-21T11:01:19+080
          */
         function setComment(dom) {
-            var title = dom.attr("data-title");
             var content = dom.parent().prev().find("textarea").val();
-            dom.parent().prev().find("textarea").val("");
             if (!content) {
                 alert("重新输入");
                 return false;
             }
+            if(dom.attr("data-id")) commentId = 0;
+            jQuery.ajax({
+                type: "POST",
+                url: "../../Controller/Comment/get_commet.php",
+                data: {
+                  fid: commentId,
+                  uid: uid,
+                  content: content,
+                },
+                //dataType: 'json',
+                timeout: 300,
+                success: function(data) {
+                  insertComment(dom);
+                },
+                error: function(xhr, type) {
+                  alert("插入失败，请重试！");
+                  console.log("status: " + xhr.status + " xhr.type: " + xhr.type);
+                }
+            });
+        }
+
+        function insertComment(dom, content) {
+            var title = dom.attr("data-title");
             var mediaDom = null;
             floor++;
             if (title) {
-                mediaDom = media(true, "用户", content, "2016-12-20 17:03:18", "30");
+                mediaDom = media(true, username, content, "2016-12-20 17:03:18", "30");
                 meidaList.prepend(mediaDom);
-            } else {
-                mediaDom = media(false, "用户", content, "2016-12-20 17:03:18", "30");
+            }
+            else {
+                mediaDom = media(false, username, content, "2016-12-20 17:03:18", "0");
                 if (level) {
                     dom.parents(".margin-vertical-extension").before(mediaDom);
-                } else {
+                }
+                else {
                     dom.parents(".media:first").after(mediaDom);
                 }
                 dom.parents(".margin-vertical-extension").remove();
                 preDom.attr("data-open", 1);
                 preDom.attr("data-this", "");
             }
-            jQuery.ajax({
-              type: "POST",
-              url: "../../Controller/Comment/get_commet.php",
-              data: {
-              },
-              dataType: 'json',
-              timeout: 300,
-              success: function(data) {
-              },
-              error: function(xhr, type) {
-                alert('Ajax error!');
-              }
-            });
+            dom.parent().prev().find("textarea").val("");
         }
 
         /**
@@ -193,9 +207,10 @@
          * @datetime 2016-12-21T11:00:20+080
          */
         function setReply(dom) {
-            level = dom.attr("data-level");
-            var open = dom.attr("data-open");
-            var point = dom.attr("data-this");
+            level      = dom.attr("data-level");
+            commentId  = dom.parents(".appear:first").attr("data-id");
+            var open   = dom.attr("data-open");
+            var point  = dom.attr("data-this");
             fatherName = dom.parents(".appear").siblings("h4").find("a:first").text();
             if (open && !point) {             // 可以加文本域
                 if (preDom) {
@@ -206,7 +221,8 @@
                 dom.parents(".appear").after(replyBoxDom);
                 dom.attr("data-open", "");
                 dom.attr("data-this", "1");
-            } else {                         // 不可以加文本域
+            }
+            else {                         // 不可以加文本域
                 dom.parents(".appear").next().remove();
                 dom.attr("data-open", 1);
                 dom.attr("data-this", "");
@@ -215,36 +231,43 @@
         }
 
         /**
-         * [deleteMedia 删除]
-         * @method   deleteMedia
+         * [deleteComment 删除]
+         * @method   deleteComment
          * @param    {[dom]}                dom [this]
          * @version  [1.0]
          * @author liyusky
          * @datetime 2016-12-21T10:59:30+080
          */
-        function deleteMedia(dom) {
-            dom.parents(".media:first").remove();
-            if (dom.parent().prev().find("a").attr("data-level")) {
-                var i = jQuery("[data-floor]").size();
-                floor = i;
-                console.log(i);
-                jQuery("[data-floor]").each(function() {
-                    jQuery(this).text("#" + i--);
-                });
-            }
+        function deleteComment(dom) {
+            commentId  = dom.parents(".appear:first").attr("data-id");
+            var flag = dom.parent().prev().children().attr("data-level") ? true : false;
             jQuery.ajax({
               type: "POST",
               url: "../../Controller/Comment/delete_comment.php",
               data: {
+                  flag: flag,
+                  id: commentId,
               },
               dataType: 'json',
               timeout: 300,
               success: function(data) {
+                  deleteMedia(dom);
               },
               error: function(xhr, type) {
                 alert('Ajax error!');
               }
             });
+        }
+
+        function deleteMedia(dom) {
+            dom.parents(".media:first").remove();
+            if (dom.parent().prev().find("a").attr("data-level")) {
+                var i = jQuery("[data-floor]").size();
+                floor = i;
+                jQuery("[data-floor]").each(function() {
+                    jQuery(this).text("#" + i--);
+                });
+            }
         }
 
         /**
@@ -256,25 +279,31 @@
          * @datetime 2016-12-21T10:58:56+080
          */
         function agree(dom) {
+            commentId  = dom.parents(".appear:first").attr("data-id");
+            jQuery.ajax({
+              type: "POST",
+              url: "../../Controller/Comment/agree.php",
+              data: {
+                  id: commentId,
+              },
+              dataType: 'json',
+              timeout: 300,
+              success: function(data) {
+                  addAgree(dom);
+              },
+              error: function(xhr, type) {
+                alert('Ajax error!');
+              }
+            });
+        }
+
+        function addAgree(dom) {
             if (dom.attr("data-agree")) {
                 dom.find("span").text(function() {
                     return jQuery(this).text() * 1 + 1;
                 });
                 dom.attr("data-agree", "");
             }
-            jQuery.ajax({
-              type: "POST",
-              url: "../../Controller/Comment/agree.php",
-              data: {
-              },
-              dataType: 'json',
-              timeout: 300,
-              success: function(data) {
-              },
-              error: function(xhr, type) {
-                alert('Ajax error!');
-              }
-            });
         }
 
         /**
@@ -285,14 +314,17 @@
          * @datetime 2016-12-21T10:57:48+080
          */
         function report() {
+            commentId  = dom.parents(".appear:first").attr("data-id");
             jQuery.ajax({
               type: "POST",
               url: "../../Controller/Comment/report.php",
               data: {
+                  id: commentId,
               },
               dataType: 'json',
               timeout: 300,
               success: function(data) {
+                  alert("举报成功");
               },
               error: function(xhr, type) {
                 alert('Ajax error!');
@@ -313,7 +345,7 @@
          * @author liyusky
          * @datetime 2016-12-21T10:50:17+080
          */
-        function media(mark, username, content, date, agree) {
+        function media(mark, username, content, date) {
             var dom = null;
             var htmlStr =
                 "<a class='media-left col-md-2 text-center' href='#'>" +
@@ -330,7 +362,7 @@
             htmlStr +=
                 "</h4>" +
                 "<p>" + content + "</p>" +
-                "<div class='row appear'>";
+                "<div data-id="+ id +" class='row appear'>";
             if (mark) {
                 htmlStr +=
                     "<div class='col-md-1'>" +
@@ -342,7 +374,7 @@
                 "<span class='btn'>" + date + "</span>" +
                 "</div>" +
                 "<div class='col-md-2'>" +
-                "<a class='btn btn-link'data-agree='1' onclick='javascript:agree(jQuery(this));'>赞&nbsp;&#40;<span>" + agree + "</span>&#41;</a>" +
+                "<a class='btn btn-link'data-agree='1' onclick='javascript:agree(jQuery(this));'>赞&nbsp;&#40;<span>0</span>&#41;</a>" +
                 "</div>" +
                 "<div class='col-md-2'>" +
                 "<a class='btn btn-link' data-open='1'";
@@ -353,7 +385,7 @@
                 "onclick='javascript:setReply(jQuery(this));'>回复</a>" +
                 "</div>" +
                 "<div class='col-md-2'>" +
-                "<a class='btn btn-link' onclick='javascript:deleteMedia(jQuery(this));'>删除</a>" +
+                "<a class='btn btn-link' onclick='javascript:deleteComment(jQuery(this));'>删除</a>" +
                 "</div>" +
                 "<div class='col-md-2'>" +
                 "<a class='btn btn-link appear-target'>举报</a>" +

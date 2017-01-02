@@ -1,8 +1,8 @@
 <?php
 namespace Model\Tables;
 
-use Model\DataBase;
-use PDO;
+use \Model;
+use \PDO;
 
 header('Content-Type:text/html;charset=utf-8');
 // include "DataBase.class.php";
@@ -19,13 +19,13 @@ class Forum extends DataBase
      */
     function __construct($Mark)
     {
-        $this->arguments = array('fid'=>null, 'uid'=>null, 'content'=>null);
-        $this->goals     = array('replySelectASC'=>null, 'replySelectDESC'=>null, 'replyInsert'=>null);
+        $this->arguments = array('id'=>null, 'fid'=>null, 'uid'=>null, 'content'=>null);
+        $this->goals     = array('replySelectASC'=>null, 'replySelectDESC'=>null, 'commentInsert'=>null, 'commentDelete'=>null, 'commentAgree'=>null, 'commentReport'=>null);
         $this->chooseBase($Mark);
         $this->connectBase();
         $this->replySelectASC();
         $this->replySelectDESC();
-        $this->replyInsert();
+        $this->commentInsert();
     }
 
     /**
@@ -57,7 +57,7 @@ class Forum extends DataBase
         try {
             $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->base->beginTransaction();
-            $_sql         = 'SELECT * FROM forum WHERE fid = ? ORDER BY id DESC';
+            $_sql          = 'SELECT * FROM forum WHERE fid = ? ORDER BY id DESC';
             $_reply_select = $this->base->prepare($_sql);
             $_reply_select->bindParam(1, $this->arguments['fid']);
             $this->base->commit();
@@ -69,18 +69,69 @@ class Forum extends DataBase
         }
     }
 
-    private function replyInsert()
+    private function commentInsert()
     {
         try {
             $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->base->beginTransaction();
-            $_sql          = "INSERT INTO forum(fid, uid, content) VALUES (?, ?, ?)";
-            $_reply_insert = $this->base->prepare($_sql);
-            $_reply_insert->bindParam(1, $this->arguments['fid']);
-            $_reply_insert->bindParam(2, $this->arguments['uid']);
-            $_reply_insert->bindParam(3, $this->arguments['content']);
+            $_sql            = "INSERT INTO forum(fid, uid, content) VALUES (?, ?, ?)";
+            $_comment_insert = $this->base->prepare($_sql);
+            $_comment_insert->bindParam(1, $this->arguments['fid']);
+            $_comment_insert->bindParam(2, $this->arguments['uid']);
+            $_comment_insert->bindParam(3, $this->arguments['content']);
             $this->base->commit();
-            $this->goals['replyInsert'] = $_reply_insert;
+            $this->goals['commentInsert'] = $_comment_insert;
+        }
+        catch (Exception $e) {
+            $this->base->rollBack();
+            die('Error!: ' . $e->getMessage() . '<br />');
+        }
+    }
+
+    private function commentDelete()
+    {
+        try {
+            $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->base->beginTransaction();
+            $_sql            = "DELETE FROM forum WHERE id = ?";
+            $_comment_delete = $this->base->prepare($_sql);
+            $_comment_delete->bindParam(1, $this->arguments['id']);
+            $this->base->commit();
+            $this->goals['commentDelete'] = $_comment_delete;
+        }
+        catch (Exception $e) {
+            $this->base->rollBack();
+            die('Error!: ' . $e->getMessage() . '<br />');
+        }
+    }
+
+    private function commentAgree()
+    {
+        try {
+            $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->base->beginTransaction();
+            $_sql           = "UPDATE forum SET agree = agree + 1 WHERE id = ?";
+            $_comment_agree = $this->base->prepare($_sql);
+            $_comment_agree->bindParam(1, $this->arguments['id']);
+            $this->base->commit();
+            $this->goals['commentAgree'] = $_comment_agree;
+        }
+        catch (Exception $e) {
+            $this->base->rollBack();
+            die('Error!: ' . $e->getMessage() . '<br />');
+        }
+    }
+
+    private function commentReport()
+    {
+        try {
+            $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->base->beginTransaction();
+            $_sql            = "UPDATE forum SET report = report + 1 WHERE id = ?";
+            $_comment_report = $this->base->prepare($_sql);
+            $_comment_report->bindParam(1, $this->arguments['id']);
+            $this->base->commit();
+            $this->goals['commentReport'] = $_comment_report;
         }
         catch (Exception $e) {
             $this->base->rollBack();

@@ -1,9 +1,10 @@
 <?php
+
 namespace Model;
 
 use PDO;
 
-header('Content-Type:text/html;charset=utf-8');
+// header('Content-Type:text/html;charset=utf-8');
 /**
  * 数据库处理类.
  * @className DateBase
@@ -30,7 +31,7 @@ class DataBase
      */
     protected function chooseBase($Mark)
     {
-        if ($mark) {            /* 生产环境 */
+        if ($Mark) {            /* 生产环境 */
             $_dbType        = 'mysql';
             $_host          = '59.110.6.77:3306';
             $_dbName        = 'bdm252590573_db';
@@ -83,10 +84,17 @@ class DataBase
         return $_flag;
     }
 
-    public function getData($Parameters)
+    public function getAllData($Parameters)
     {
         $this->executeBase($Parameters);
         $_result = $this->goals[$Parameters['role']]->fetchAll();
+        return $_result;
+    }
+
+    public function getNextData($Parameters)
+    {
+        $this->executeBase($Parameters);
+        $_result = $this->goals[$Parameters['role']]->fetch(PDO::FETCH_ASSOC);
         return $_result;
     }
 }

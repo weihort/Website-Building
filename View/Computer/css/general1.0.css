@@ -1,59 +1,10 @@
 
-/* start reset */
 
-  /* start a */
-    a{
-      text-decoration: none;
-    }
-    a:link{
-      text-decoration:none;
-    }
-  /* end a */
-
-  /* start btn */
-    .btn:link{
-      text-decoration:none;
-    }
-    .btn:hover{
-      text-decoration:none;
-    }
-  /* end btn */
-
-  /* start xxx */
-  /* end xxx */
-
-/* end reset */
+/* start xxx */
+/* end xxx */
 
 
 /* start 布局 */
-
-    /* start display */
-
-      /* start none */
-        .none{
-          display: none;
-        }
-      /* end none */
-
-      /* start block */
-        .block{
-          display: block;
-        }
-      /* end block */
-
-      /* start inline */
-        .inline{
-          display: inline;
-        }
-      /* end inline */
-
-      /* start inline-block */
-        .inline-block{
-          display: inline-block;
-        }
-      /* end inline-block */
-
-    /* end display */
 
     /* start 水平居中 */
         .horizontal-center{
@@ -106,12 +57,6 @@
       }
     /* end 左右外边距15px */
 
-    /*start 上部外边距-大*/
-    .margin-top-lg{
-      margin-top: 80px;
-    }
-    /*end 上部外边距-大*/
-
     /* start 内边距 */
       .padding-extension{
         padding: 20px;
@@ -120,22 +65,15 @@
     /* end 内边距 */
 
     /* start 图片大小 */
-
-      /* start image-sm */
-        .img-sm{
-          width: 130px;
-          height: 130px;
-        }
-      /* end image-sm */
-
-      /* start 头像 */
-        .portrait{
+      .img-sm{
+        width: 130px;
+        height: 130px;
+      }
+      .portrait{
           width: 70px;
           height: 70px;
           margin-top: 2px;
-        }
-      /* end 头像 */
-
+      }
     /* end 图片大小 */
 
     /* start xxx */
@@ -146,6 +84,12 @@
 /* start ui */
 
     /* start 文字 */
+
+        /* start 居中 */
+            .text-center{
+                text-align: center;
+            }
+        /* end 居中 */
 
         /* start 颜色 */
             .write-color{
@@ -158,15 +102,6 @@
                 text-decoration: none;
             }
         /* end 下划线 */
-
-        /* start 隐藏溢出 */
-          .overflow-hidden{
-            overflow: hidden;
-          }
-        /* end 隐藏溢出 */
-
-        /* start xxx */
-        /* end xxx */
 
     /* end 文字 */
 
@@ -198,8 +133,8 @@
     /* end 圆角 */
 
     /* start 表单元素 */
+
         /* start textarea */
-        /* TODO: 或许将修改 */
             .textarea-control{
                 resize: none;
                 overflow: hidden;
@@ -268,23 +203,12 @@
 
 
     /* start 按钮 */
-
-      /* start deliver */
         .btn-deliver {
-          width: 70px;
-          height: 70px;
-          margin-top: 2px;
-          line-height: 56px;
+            width: 70px;
+            height: 70px;
+            margin-top: 2px;
+            line-height: 56px;
         }
-      /* end deliver */
-
-      /* start login页面登录注册按钮 */
-      .btn-control{
-        font-size: 20px;
-        font-weight: bolder;
-      }
-      /* end login页面登录注册按钮 */
-
     /* end 按钮 */
 
     /* start 浮现 */
@@ -295,13 +219,6 @@
             display: none;
         }
     /* end 浮现 */
-
-    /*start图标样式*/
-      .icon{
-        font-size: 22px;
-      }
-    /*end图标样式*/
-
 
     /* start xxx */
     /* end xxx */
