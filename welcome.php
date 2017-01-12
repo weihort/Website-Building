@@ -1,3 +1,9 @@
+<?php
+session_start();
+$_SESSION['ROOT_DIRECTORY'] = dirname(__FILE__);
+$_SESSION['WEB_SITE'] = "localhost:8080";
+ ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -26,12 +32,13 @@
         <!-- start page link -->
         <div class="row">
             <nav class="col-md-6 col-md-push-3">
-                <a href="./View/Computer/new.php" class="col-md-6 btn btn-lg btn-link write-color">NEWS</a>
-                <a href="./View/Computer/comic.php" class="col-md-6 btn btn-lg btn-link write-color">COMICS</a>
-                <a href="./View/Computer/technology.php" class="col-md-6 btn btn-lg btn-link write-color">IT SKILLS</a>
-                <a href="./View/Computer/communication.php" class="col-md-6 btn btn-lg btn-link write-color">GUEST BOOKS</a>
-                <a href="./View/Computer/game.php" class="col-md-6 btn btn-lg btn-link write-color">GAMES</a>
-                <a href="./View/Computer/party.php" class="col-md-6 btn btn-lg btn-link write-color">PARTYS</a>
+                <?php echo $_SESSION['WEB_SITE'] . "/View/Computer/party.php" ?>
+                <a href="<?php echo $_SESSION['WEB_SITE'] . "/View/Computer/new.php" ?>" class="col-md-6 btn btn-lg btn-link write-color">NEWS</a>
+                <a href="<?php echo $_SESSION['WEB_SITE'] . "/View/Computer/comic.php" ?>" class="col-md-6 btn btn-lg btn-link write-color">COMICS</a>
+                <a href="<?php echo $_SESSION['WEB_SITE'] . "/View/Computer/technology.php" ?>" class="col-md-6 btn btn-lg btn-link write-color">IT SKILLS</a>
+                <a href="<?php echo $_SESSION['WEB_SITE'] . "/View/Computer/communication.php" ?>" class="col-md-6 btn btn-lg btn-link write-color">GUEST BOOKS</a>
+                <a href="<?php echo $_SESSION['WEB_SITE'] . "/View/Computer/game.php" ?>" class="col-md-6 btn btn-lg btn-link write-color">GAMES</a>
+                <a href="<?php echo $_SESSION['WEB_SITE'] . "/View/Computer/party.php" ?>" class="col-md-6 btn btn-lg btn-link write-color">PARTYS</a>
             </nav>
         </div>
         <!-- start page link -->

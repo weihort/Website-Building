@@ -1,29 +1,37 @@
 <?php
-
+/**
+ * description  用户获权/登陆载入，
+ * @context PHP 5
+ * @version 3.0
+ * @author liyusky
+ * @datetime 2017-1-12 10:35:48+080
+ */
 namespace Controller\User;
 
-use \Model\Tables\Customer;
+use \Controller\Common;
 use PDO;
 
 session_start();
 
-include $_SESSION['ROOT_DIRECTORY'] . '/Model/Tables/Customer.class.php';                  //引入 Customer.class.php 文件
+include $_SESSION['ROOT_DIRECTORY'] . '/Controller/Common/Object.php';
 
 $ip         = $_POST['ip'];
 $token      = $_POST['token'];
-if (($token !== md5($_SESSION['token'])) && ($ip !== $_SESSION['ip'])) die('大家井水不犯河水，兄台请绕路！');        //验证是否被攻击
-$username   = $_POST['username'];
+if (($token !== md5($_SESSION['token'])) && ($ip !== $_SESSION['ip'])){         //验证是否被攻击
+    die('大家井水不犯河水，兄台请绕路！');
+}
+$account   = $_POST['account'];
 $password   = $_POST['password'];
 $longitude  = $_POST["longitude"];
 $latitude   = $_POST["latitude"];
-$customer   = new Customer(false);          //实例化 Customer 对象
-$selectArgs = array(                        //设置查询参数
+$selectArgs = array(                        //查询customer表，判断账户是否存在
     'role' => 'loginSelect',
     'data' => array(
-        'username' => $username
+        'username' => $account,
+        'email'    => $account,
     ),
 );
-$updateArgs = array(                       //设置更新参数
+$updateArgs = array(                       //更新customer表
     'role' => 'loginUpdate',
     'data' => array(
         'ip'        => $ip,
@@ -32,11 +40,14 @@ $updateArgs = array(                       //设置更新参数
         'username'  => $username,
     ),
 );
+
 try {
     $customer->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $customer->base->beginTransaction();
-    $selectResult = $customer->getNextData($selectArgs);                            //获取对应数据
-    if (!(md5($selectResult['password']) == $password)) die('您的用户名与密码不匹配！');    //密码错误
+    $selectResult = $customer->getNextData($selectArgs);                //获取customer表中用户数据
+    if (!(md5($selectResult['password']) == $password)){                //密码错误
+        die('您的用户名与密码不匹配！');
+    }
     $updateResult = $customer->executeBase($updateArgs);
     $customer->base->commit();
     // TODO: 该错误需要加入日志

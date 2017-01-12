@@ -1,13 +1,13 @@
 <?php
 
-namespace \Controller\Comment;
+namespace Controller\Comment;
 
-use Model\Tables\Forum;
+use \Controller\Common;
 use PDO;
 
-$id        = $_POST['id'];
+// include_once $_SESSION['ROOT_DIRECTORY'] . '/Controller/Common/Object.php';
 
-$forum     = new Forum(false);
+$id        = $_POST['id'];
 $agreeArgs = array(
     'role' => 'commentAgree',
     'data' => array(
@@ -18,11 +18,11 @@ try {
     $forum->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $forum->base->beginTransaction();
     $result = $forum->executeBase($agreeArgs);
-    $forum->base->commit();
     if (!$result) {
         $forum->base->rollBack();
-        die('评论赞同失败');
+        die('赞同失败');
     }
+    $forum->base->commit();
 } catch (PDOException $e) {
     $forum->base->rollBack();
     die('Error!: '.$e->getMessage().'<br />');

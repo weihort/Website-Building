@@ -2,15 +2,13 @@
 
 namespace \Controller\Comment;
 
-use Model\Tables\Forum;
+use \Controller\Common;
 use PDO;
 
-//引入要实例化的类
-// include '../Model/Forum.class.php ';
-// header('Content-Type:text/html;charset=utf-8');
+// include_once $_SESSION['ROOT_DIRECTORY'] . '/Controller/Common/Object.php';
+
 $floor      = 0;    //需要缩进的数
 $contentStr = '';
-$forum      = new Forum(false);     //实例化
 $selectArgs = array(        //设置属性
     'role' => 'replySelectDESC',
     'data' => array(
@@ -18,12 +16,14 @@ $selectArgs = array(        //设置属性
     ),
     'level' => 0,
 );
+
 try {
     $forum->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $forum->base->beginTransaction();      //开启事务
     $floor = sizeof($forum->getData($selectArgs));
     getContent($forum, $selectArgs);           //罗列事务
-} catch (Exception $e) {
+}
+catch (Exception $e) {
     $forum->base->rollBack();                 //回滚
     die('Error!: '.$e->getMessage().'<br />');
 }

@@ -2,12 +2,13 @@
 
 namespace \Controller\Comment;
 
-use Model\Tables\Forum;
+use \Controller\Common;
 use PDO;
+
+// include_once $_SESSION['ROOT_DIRECTORY'] . '/Controller/Common/Object.php';
 
 $id         = $_POST['id'];
 
-$forum      = new Forum(false);
 $reportArgs = array(
     'role' => 'commentReport',
     'data' => array(
@@ -18,11 +19,11 @@ try {
     $forum->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $forum->base->beginTransaction();
     $result = $forum->executeBase($reportArgs);
-    $forum->base->commit();
     if (!$result) {
         $forum->base->rollBack();
         die('评论举报失败');
     }
+    $forum->base->commit();
 } catch (PDOException $e) {
     $forum->base->rollBack();
     die('Error!: '.$e->getMessage().'<br />');

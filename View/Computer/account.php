@@ -3,7 +3,7 @@
 namespace View\Computer;
 
 session_start();
-$_SESSION['ip111'] = $_SERVER['REMOTE_ADDR'];
+$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
 $_SESSION['ROOT_DIRECTORY'] = dirname(dirname(dirname(__FILE__)));          //设置根目录常量
 
  ?>
@@ -32,7 +32,7 @@ $_SESSION['ROOT_DIRECTORY'] = dirname(dirname(dirname(__FILE__)));          //�
         </div>
         <ul class="tab-content margin-vertical-extension list-unstyled">
           <li class="tab-pane fade in active" id="signup">
-            <input class="form-control margin-vertical-extension" id="login-username" type="text" placeholder="用户名">
+            <input class="form-control margin-vertical-extension" id="login-account" type="text" placeholder="用户名">
             <input class="form-control margin-vertical-extension" id="login-password" type="password" placeholder="密码">
             <a class="btn btn-primary form-control margin-vertical-extension" onclick="javascript:login();">登录</a>
             <p class="text-left">
@@ -55,7 +55,7 @@ $_SESSION['ROOT_DIRECTORY'] = dirname(dirname(dirname(__FILE__)));          //�
           <li class="tab-pane fade" id="signin">
             <input class="form-control margin-vertical-extension" id="regist-username" type="text" placeholder="用户名">
             <input class="form-control margin-vertical-extension" id="email" type="email" placeholder="邮箱">
-            <input class="form-control margin-vertical-extension" id="regist-password" type="text" placeholder="密码">
+            <input class="form-control margin-vertical-extension" id="regist-password" type="password" placeholder="密码">
             <a class="btn btn-primary form-control margin-vertical-extension" onclick="javascript:regist();">注册</a>
             <p>
               <span>点击&#91;注册&#93;按钮，即代表你同意</span>
@@ -95,18 +95,18 @@ $_SESSION['ROOT_DIRECTORY'] = dirname(dirname(dirname(__FILE__)));          //�
      * @datetime 2017-01-01T14:07:56+080
      */
     function login() {
-        var username = document.getElementById('login-username').value;       //获取用户名
+        var account = document.getElementById('login-account').value;       //获取用户名
         var password = document.getElementById('login-password').value;       //获取密码
-        if (!username) {                                                      //判断用户名是否为空
-            alert("用户名不允许为空！");
+        if (!account) {                                                      //判断用户名是否为空
+            alert("账户名不允许为空！");
             return false;
         }
         if (!password) {                                                      //判断密码是否为空
             alert("密码不允许为空！");
             return false;
         }
-        if (!isUsername(username)) {                                          //判断用户名是否符合格式
-            alert("用户名不正确！")
+        if (!isUsername(account) || !isEmail(account)) {                                          //判断用户名是否符合格式
+            alert("账户名不正确！")
             return false;
         }
         if (!isPassword(password)) {                                          //判断密码是否符合格式
@@ -120,7 +120,7 @@ $_SESSION['ROOT_DIRECTORY'] = dirname(dirname(dirname(__FILE__)));          //�
             url: "../../Controller/User/login.php",
             data: {
                 token: token,
-                username: username,
+                account: account,
                 password: hex_md5(password),
                 ip: ip,
                 longitude: 0, //"longitude",
@@ -150,7 +150,7 @@ $_SESSION['ROOT_DIRECTORY'] = dirname(dirname(dirname(__FILE__)));          //�
         var username = document.getElementById('regist-username').value;      //获取用户名
         var password = document.getElementById('regist-password').value;      //获取密码
         var email    = document.getElementById('email').value;
-        if (!username) {                                                      //判断用户名是否为空
+        if (!account) {                                                      //判断用户名是否为空
             alert("用户名不允许为空！");
             return false;
         }
@@ -163,7 +163,7 @@ $_SESSION['ROOT_DIRECTORY'] = dirname(dirname(dirname(__FILE__)));          //�
             return false;
         }
         if (!isUsername(username)) {
-            alert("用户名不正确！");
+            alert("账户名不正确！");
             return false;
         }
         if (!isPassword(password)) {

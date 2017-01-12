@@ -1,4 +1,7 @@
 <?php
+
+namespace Controller\Mail;
+
 /**
  * PHPMailer RFC821 SMTP email transport class.
  * PHP Version 5

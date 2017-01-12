@@ -2,16 +2,14 @@
 
 namespace \Controller\Comment;
 
-use Modal\Tables\Forum;
+use \Controller\Common;
 use PDO;
 
-// include $_SESSION["ROOT_PATH"] . '/Model/Forum.class.php ';
-// header('Content-Type:text/html;charset=utf-8');
+// include_once $_SESSION['ROOT_DIRECTORY'] . '/Controller/Common/Object.php';
 
 $fid        = $_POST['fid'];
 $uid        = $_POST['uid'];
 $content    = $_POST['content'];
-$forum      = new Forum(false);
 $insertArgs = array(        //设置属性
     'role' => 'replyInsert',
     'data' => array(
@@ -23,7 +21,11 @@ $insertArgs = array(        //设置属性
 try {
     $forum->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $forum->base->beginTransaction();      //开启事务
-    $forum->executeBase($insertArgs);
+    $result = $forum->executeBase($insertArgs);
+    if (!$result) {
+        dirname('插入失败！');
+    }
+    $forum->base->commit();
 } catch (Exception $e) {
     $forum->base->rollBack();                 //回滚
     die('Error!: '.$e->getMessage().'<br />');

@@ -2,27 +2,10 @@
 
 namespace Controller\Safe;
 
+use \Controller\Common as Common;
+
+include dirname(dirname(dirname(__FILE__))) . '/Controller/Common/randomStr.php';       //引入 Customer.php 文件
+
 session_start();
-$_SESSION['token'] = setToken(20);
+$_SESSION['token'] = Common\randomStr(20);
 echo $_SESSION['token'];
-
-/**
- * [setToken 设置token].
- * @method   setToken
- * @param [int] $Length [令牌的长度]
- * @return [string] [返回token字符串]
- * @version  [1.0]
- * @author liyuay
- * @datetime 2017-01-01T14:18:00+080
- */
-function setToken($Length)
-{
-    // $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_ []{}<>~`+=,.;:/?|';
-    $_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    $_token = '';
-    for ($i = 0; $i < $Length; ++$i) {
-        $_token .= $_chars[rand(0, strlen($_chars) - 1)];
-    }
-
-    return $_token;
-}
