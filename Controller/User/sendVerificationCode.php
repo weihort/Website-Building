@@ -50,7 +50,7 @@ try {
     }
     //设置邮件信息
     $title        = '验证码';
-    $message      = 1;
+    $message      = $verification;
     $emailResult  = $sendEmail($email, $selectResult['username'], $title, $message);
     if (!$emailResult) {                    //邮件发送失败回滚
         $customer->base->rollBack();

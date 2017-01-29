@@ -54,7 +54,7 @@ try {
     }
     $tempSelectResult  = $temp->getNextData($selectTempArgs);                   //查找是否为预注册用户，temp表
     if (($token != md5($_SESSION['token'])) || ($email != $tempSelectResult['email'])) {    //token不符或email不符
-        include dirname(dirname(dirname(__FILE__))) . '/View/Computer/fail_regist.html';    //引入注册失败文件
+        include dirname(dirname(dirname(__FILE__))) . '/View/Computer/failRegist.html';    //引入注册失败文件
         die();
     }
     foreach ($insertCustomerArgs['data'] as $key => $value) {                   //为$insertCustomerArgs设置内容
@@ -62,17 +62,17 @@ try {
     }
     $customerInsertResult = $customer->executeBase($insertCustomerArgs);        //customer表输入数据
     if (!$customerInsertResult) {                   //插入失败引入注册失败文件
-        include dirname(dirname(dirname(__FILE__))) . '/View/Computer/fail_regist.html';
+        include dirname(dirname(dirname(__FILE__))) . '/View/Computer/failRegist.html';
         $customer->base->rollBack();
         die();
     }
     $customer->base->commit();
     $temp->base->commit();
 } catch (Exception $e) {                            //发生异常，引入注册失败文件
-    include dirname(dirname(dirname(__FILE__))) . '/View/Computer/fail_regist.html';
+    include dirname(dirname(dirname(__FILE__))) . '/View/Computer/failRegist.html';
     $temp->base->rollBack();
     $customer->base->rollBack();
     die('Error!: '.$e->getMessage().'<br />');
 }
 
-include dirname(dirname(dirname(__FILE__))) . '/View/Computer/success_regist.html';     //注册成功，引入注册成功文件
+include dirname(dirname(dirname(__FILE__))) . '/View/Computer/successRegist.html';     //注册成功，引入注册成功文件

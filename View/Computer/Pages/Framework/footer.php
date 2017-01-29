@@ -1,3 +1,6 @@
+<?php
+namespace View\Computer\Pages\Framework;
+ ?>
 <!-- start footer -->
 <footer class="container-fluid">
     <div class="container">
