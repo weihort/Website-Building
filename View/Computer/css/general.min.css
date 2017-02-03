@@ -150,6 +150,10 @@ a:link{
     cursor: pointer;
     border: 1px solid transparent;
     border-radius: 4px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 }
 .appear:hover .appear-target{
     display: inline-block;
@@ -165,6 +169,12 @@ a:link{
     right: 0;
     bottom: 0;
     left: 0;
+}
+.absolute-center{
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 .title-control
 {

@@ -1,6 +1,6 @@
 <?php
 /**
- * description  customer表数据库sql预处理架设，
+ * description  User表数据库sql预处理架设，
  * @context PHP 5
  * @version 3.0
  * @author liyusky
@@ -12,13 +12,13 @@ use \Model\DateBase;
 use PDO;
 
 /**
- * customer表处理类
+ * User表处理类
  * @className DateBase
  * @version 1.0
  * @datetime 2016-11-28T17:40:06+080
  * @author liyusky
  */
-class Customer extends DateBase
+class User extends DateBase
 {
 
     /**
@@ -56,13 +56,13 @@ class Customer extends DateBase
         $this->device = array(                      //数据库预处理状态明细
             'loginSelect' => array(         //登录时查询该用户名是否存在
                 'mark' => true,
-                'sql' => 'SELECT * FROM customer WHERE username = :account OR email = :account',
+                'sql' => 'SELECT * FROM User WHERE username = :account OR email = :account',
                 'data' => array('account'),
             ),
             'loginUpdate' => array(         //登录时更新用户数据为当前登陆状态信息
                 'mark' => true,
                 'sql' => "
-                    UPDATE customer SET
+                    UPDATE User SET
                     preview_ip        = now_ip,
                     preview_longitude = now_longitude,
                     preview_latitude  = now_latitude,
@@ -78,20 +78,20 @@ class Customer extends DateBase
             ),
             'registerSelect' => array(                    //注册时查询用户名与邮箱是否被注册
                 'mark' => true,
-                'sql' => 'SELECT * FROM customer WHERE username = :username OR email = :email',
+                'sql' => 'SELECT * FROM User WHERE username = :username OR email = :email',
                 'data'=> array('username', 'email'),
             ),
             'registerInsert' => array(                   //注册时插入用户必须信息
                 'mark' => true,
                 'sql' => '
-                    INSERT INTO customer(username, password, email, now_ip, now_longitude, now_latitude)
+                    INSERT INTO User(username, password, email, now_ip, now_longitude, now_latitude)
                     VALUES(:username, :password, :email, :ip, :longitude, :latitude);
                 ',
                 'data'=> array('username', 'password', 'email', 'ip', 'longitude', 'latitude'),
             ),
             'verificationSelect' => array(              //忘记密码时查询是否存在该用户
                 'mark' => true,
-                'sql' => 'SELECT * FROM customer WHERE email = :email',
+                'sql' => 'SELECT * FROM User WHERE email = :email',
                 'data'=> array('email'),
             ),
             'verificationUpdate' => array(              //忘记密码时将对应用户数据添加验证码
@@ -101,7 +101,7 @@ class Customer extends DateBase
             ),
             'resetPasswordSelect' => array(             //更改密码时查询有无该用户
                 'mark' => true,
-                'sql' => 'SELECT * FROM customer WHERE email = :email',
+                'sql' => 'SELECT * FROM User WHERE email = :email',
                 'data'=> array('email'),
             ),
             'resetPasswordUpdate' => array(            //更改密码时更新用户信息（密码）
@@ -116,7 +116,7 @@ class Customer extends DateBase
     }
 
     /**
-     * [verificationEvent 忘记密码状态下设置customer表定时删除验证码任务]
+     * [verificationEvent 忘记密码状态下设置User表定时删除验证码任务]
      * @method   verificationEvent
      * @param    [string]                  $Email [处理过的邮箱名 号码+邮箱类型]
      * @version  [3.0]
@@ -126,17 +126,17 @@ class Customer extends DateBase
     public function verificationEvent($Email)
     {
         $this->device['verificationUpdate']['sql'] = "
-            UPDATE customer SET verification = :verification WHERE email  = :email;
+            UPDATE User SET verification = :verification WHERE email  = :email;
             CREATE EVENT delete" . $Email . "
                 ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 30 MINUTE
                 ON COMPLETION NOT PRESERVE
-                DO UPDATE customer SET verification = NULL WHERE email = :email;
+                DO UPDATE User SET verification = NULL WHERE email = :email;
         ";
         $this->loadSQL('verificationUpdate', $this->device['verificationUpdate']);
     }
 
     /**
-     * [resetPasswordEvent 忘记密码状态下重设密码且删除customer表定时任务]
+     * [resetPasswordEvent 忘记密码状态下重设密码且删除User表定时任务]
      * @method   resetPasswordEvent
      * @param    [string]                  $Email [处理过的邮箱名 号码+邮箱类型]
      * @version  [3.0]
@@ -146,7 +146,7 @@ class Customer extends DateBase
     public function resetPasswordEvent($Email)
     {
         $this->device['resetPasswordUpdate']['sql'] = "
-            UPDATE customer SET password = :password, verification = NULL WHERE email  = :email;
+            UPDATE User SET password = :password, verification = NULL WHERE email  = :email;
             DROP EVENT delete". $Email .";
         ";
         $this->loadSQL('resetPasswordUpdate', $this->device['resetPasswordUpdate']);

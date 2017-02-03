@@ -7,6 +7,8 @@ namespace View\Computer\Pages\Composition;
 </head>
 
 
+
+
 <!--start content-->
 <div class="container">
   <div class="row">
@@ -14,12 +16,33 @@ namespace View\Computer\Pages\Composition;
     </ul>
     <div class="col-md-4"></div>
   </div>
+  <div class="row">
+      <nav aria-label="Page navigation" class="absolute-center">
+          <ul class="pagination ">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+        </ul>
+    </nav>
 </div>
+
 <!--end content-->
 
 <script type="text/javascript">
     jQuery("#comic-list").ready(function() {
-        setRecommend("comic", "comic-list", setComic);
+        setRecommend("comic", 0, "comic-list", setComic);
     });
     function setComic (unitRecommendMessage) {
         return "<li class='thumbnail'>" +
@@ -72,4 +95,5 @@ namespace View\Computer\Pages\Composition;
                   "</div>" +
                 "</li>";
     }
+    getArticle([{genre: 'comic', cursor: true}, {genre: 'game', cursor: true}, {genre: 'skill', cursor: true}]);
 </script>

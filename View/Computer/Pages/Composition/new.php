@@ -14,13 +14,13 @@ namespace View\Computer\Pages\Composition;
                 <div class="col-md-3">
                     <ul class="row list-unstyled" style="margin-top:20px;">
                         <li class="col-md-6">
-                            <a href="#" class="btn btn-default">
+                            <a href="javascript:void(0);" data-cursor='1' data-genre="comic" onclick="javascript:change(jQuery(this));" class="btn btn-default">
                                 <span class="glyphicon glyphicon-refresh"></span>
                                 <span>换一批</span>
                             </a>
                         </li>
                         <li class="col-md-6">
-                            <a href="#" class="btn btn-default">
+                            <a href="http://127.0.0.1:8080/View/Computer/Pages/Framework/home.php?page=comic" class="btn btn-default">
                                 <span>更多</span>
                                 <span>&gt;</span>
                             </a>
@@ -63,7 +63,7 @@ namespace View\Computer\Pages\Composition;
                 <div class="col-md-3">
                     <ul class="row list-unstyled" style="margin-top:20px;">
                         <li class="col-md-6">
-                            <a href="#" class="btn btn-default">
+                            <a href="javascript:void(0);" data-cursor='1' data-genre="game" onclick="javascript:change(jQuery(this));" class="btn btn-default">
                                 <span class="glyphicon glyphicon-refresh"></span>
                                 <span>换一批</span>
                             </a>
@@ -112,7 +112,7 @@ namespace View\Computer\Pages\Composition;
                 <div class="col-md-3">
                     <ul class="row list-unstyled" style="margin-top:20px;">
                         <li class="col-md-6">
-                            <a href="#" class="btn btn-default">
+                            <a href="javascript:void(0);" data-cursor='1' data-genre="skill" onclick="javascript:change(jQuery(this));" class="btn btn-default">
                                 <span class="glyphicon glyphicon-refresh"></span>
                                 <span>换一批</span>
                             </a>
@@ -199,14 +199,13 @@ namespace View\Computer\Pages\Composition;
 <!-- end music section -->
 
 <script type="text/javascript">
-    for (genre of ['comic', 'skill', 'game', 'party']) {
+    for (genre of ['comic', 'skill', 'game']) {
         (function(genre) {
             jQuery("#" + genre + "-specials").ready(function() {
-                setRecommend(genre, genre + "-specials", setNew);
+                setRecommend(genre, 0, genre + "-specials", setNew);
             });
         })(genre);
     }
-
 
     function setNew (unitRecommendMessage) {
         return "<li class='col-md-4'>" +
@@ -226,4 +225,63 @@ namespace View\Computer\Pages\Composition;
                 "</a>" +
             "</li>";
     }
+
+    function getComicMsg () {
+        getArticle(
+            "comic",
+            function () {
+                getComicMsg();
+            }
+        );
+    }
+
+    var getComicMsg = setInterval(
+        function () {
+        },
+        6000
+    );
+
+    setTimeout(
+        function () {
+            var getGameMsg = setInterval(
+                function () {
+                    getArticle(
+                        {genre: 'game', cursor: true},
+                        function () {
+                            clearInterval(getGameMsg);
+                        }
+                    );
+                },
+                6000
+            );
+        },
+        2000
+    );
+
+    setTimeout(
+        function () {
+            var getSkillMsg = setInterval(
+                function () {
+                    getArticle(
+                        {genre: 'skill', cursor: true},
+                        function () {
+                            clearInterval(getSkillMsg);
+                        }
+                    );
+                },
+                6000
+            );
+        },
+        4000
+    );
+
+
+    function change (thisDom) {
+        var cursor = thisDom.attr("data-cursor") * 1;
+        console.log(cursor);
+        var genre  = thisDom.attr('data-genre');
+        var index  = setRecommend(genre, cursor, genre + "-specials", setNew);
+        thisDom.attr("data-cursor", index + 1);
+    }
+
 </script>

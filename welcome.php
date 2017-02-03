@@ -13,6 +13,7 @@ $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
   <link rel="stylesheet" href="./View/Computer/css/bootstrap.min.css" />
   <link rel="stylesheet" href="./View/Computer/css/general.min.css" />
   <script src="./View/Computer/javascript/jquery.min.js"></script>
+  <script src="./View/Computer/javascript/getArticle.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -99,20 +100,8 @@ $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
         // }
 
         //版本2.0  页面一加载就获取文章信息
-        for (var genre of ['comic', 'skill', 'game']) {
-            (function(genre) {
-                jQuery.post(
-                    "http://127.0.0.1:8080/Controller/Recommend/featuredGoods.php",
-                    {"genre": genre},
-                    function (data) {
-                        if (typeof(Storage)) {
-                            localStorage[genre] = data;
-                        }
-                    },
-                    'text'
-                );
-            })(genre);
-        }
+
+        getArticle(["comic", "skill", "game"]);
     </script>
 </body>
 

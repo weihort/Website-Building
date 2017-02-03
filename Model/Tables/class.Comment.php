@@ -1,6 +1,6 @@
 <?php
 /**
- * description  forum表数据库sql预处理架设，
+ * description  Comment表数据库sql预处理架设，
  * @context PHP 5
  * @version 3.0
  * @author liyusky
@@ -12,13 +12,13 @@ use \Model\DateBase;
 use PDO;
 
 /**
- * forum表处理类
- * @className Forum
+ * Comment表处理类
+ * @className Comment
  * @version 1.0
  * @datetime 2016-11-28T17:40:06+080
  * @author liyusky
  */
-class Forum extends DateBase
+class Comment extends DateBase
 {
     /**
      * [__construct 连接数据库].
@@ -47,32 +47,32 @@ class Forum extends DateBase
         $this->device    = array(           //数据库预处理状态明细
             'replySelectASC'  => array(                 //正序查找评论信息
                 'mark' => true,
-                'sql'  => 'SELECT * FROM forum WHERE fid = :fid ORDER BY id ASC',
+                'sql'  => 'SELECT * FROM Comment WHERE fid = :fid ORDER BY id ASC',
                 'data' => array('fid'),
             ),
             'replySelectDESC' => array(                 //逆序查找评论信息
                 'mark' => true,
-                'sql'  => 'SELECT * FROM forum WHERE fid = :fid ORDER BY id DESC',
+                'sql'  => 'SELECT * FROM Comment WHERE fid = :fid ORDER BY id DESC',
                 'data' => array('fid'),
             ),
             'commentInsert'   => array(                 //插入评论
                 'mark' => true,
-                'sql'  => "INSERT INTO forum(fid, uid, content) VALUES (:fid, :uid, :content)",
+                'sql'  => "INSERT INTO Comment(fid, uid, content) VALUES (:fid, :uid, :content)",
                 'data' => array('fid', 'uid', 'content'),
             ),
             'commentDelete'   => array(                 //删除评论
                 'mark' => true,
-                'sql'  => "DELETE FROM forum WHERE id = :id",
+                'sql'  => "DELETE FROM Comment WHERE id = :id",
                 'data' => array('id'),
             ),
             'commentAgree'    => array(                 //赞同评论
                 'mark' => true,
-                'sql'  => "UPDATE forum SET agree = agree + 1 WHERE id = :id",
+                'sql'  => "UPDATE Comment SET agree = agree + 1 WHERE id = :id",
                 'data' => array('id'),
             ),
             'commentReport'   => array(                 //举报评论
                 'mark' => true,
-                'sql'  => "UPDATE forum SET report = report + 1 WHERE id = :id",
+                'sql'  => "UPDATE Comment SET report = report + 1 WHERE id = :id",
                 'data' => array('id'),
             ),
         );

@@ -1,6 +1,6 @@
 <?php
 /**
- * description  article表数据库sql预处理架设，
+ * description  Article表数据库sql预处理架设，
  * @context PHP 5
  * @version 3.0
  * @author liyusky
@@ -46,7 +46,8 @@ class Article extends DateBase
             'report'       => null,
         );
         $this->goals     = array(                   //数据库预处理状态名称
-            'recommendSelect'       => null,                  //推荐页下查询文章信息
+            'recommendSelectTop'    => null,                  //推荐页下查询文章信息
+            'recommendSelectLater'  => null,
             'recommendInsert'       => null,
             'articleAgreeUpdate'    => null,
             'articleOpposeUpdate'   => null,
@@ -54,37 +55,42 @@ class Article extends DateBase
             'articleReportUpdate'   => null,
         );
         $this->device    = array(                   //数据库预处理状态明细
-            'recommendSelect'       => array(         //登录时查询该用户名是否存在
+            'recommendSelectTop'       => array(         //登录时查询该用户名是否存在
                 'mark' => true,
-                'sql'  => 'SELECT * FROM article WHERE genre = :genre ORDER BY aid DESC LIMIT 6',
+                'sql'  => 'SELECT * FROM Article WHERE genre = :genre ORDER BY aid DESC LIMIT 6',
                 'data' => array('genre'),
+            ),
+            'recommendSelectLater' => array(
+                'mark' => true,
+                'sql'  => 'SELECT * FROM Article WHERE genre = :genre AND aid < :aid ORDER BY aid DESC LIMIT 6',
+                'data' => array('genre', 'aid'),
             ),
             'recommendInsert'       => array(
                 'mark' => true,
                 'sql'  => '
-                    INSERT INTO article(author, genre, title, description, content_link, image_link, agree, hate, favorite, report)
-                    values(:author, :genre, :title, :description, :content_link, :image_link, :agree, :hate, :favorite, :report)
+                    INSERT INTO Article(author, genre, title, description, content_link, image_link, agree, oppose, favorite, report)
+                    values(:author, :genre, :title, :description, :content_link, :image_link, :agree, :oppose, :favorite, :report)
                 ',
-                'data' => array('author', 'genre', 'title', 'description', 'content_link', 'image_link', 'agree', 'hate', 'favorite', 'report'),
+                'data' => array('author', 'genre', 'title', 'description', 'content_link', 'image_link', 'agree', 'oppose', 'favorite', 'report'),
             ),
             'articleAgreeUpdate'    => array(
                 'mark' => true,
-                'sql'  => 'UPDATE article SET agree = agree + 1 WHERE aid = :aid',
+                'sql'  => 'UPDATE Article SET agree = agree + 1 WHERE aid = :aid',
                 'data' => array('aid'),
             ),
             'articleOpposeUpdate'   => array(
                 'mark' => true,
-                'sql'  => 'UPDATE article SET oppose = oppose + 1 WHERE aid = :aid',
+                'sql'  => 'UPDATE Article SET oppose = oppose + 1 WHERE aid = :aid',
                 'data' => array('aid'),
             ),
             'articleFavoriteUpdate' => array(
                 'mark' => true,
-                'sql'  => 'UPDATE article SET favorite = favorite + 1 WHERE aid = :aid',
+                'sql'  => 'UPDATE Article SET favorite = favorite + 1 WHERE aid = :aid',
                 'data' => array('aid'),
             ),
             'articleReportUpdate'   => array(
                 'mark' => true,
-                'sql'  => 'UPDATE article SET report = report + 1 WHERE aid = :aid',
+                'sql'  => 'UPDATE Article SET report = report + 1 WHERE aid = :aid',
                 'data' => array('aid'),
             ),
 

@@ -16,17 +16,22 @@ session_start();
     <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
     <script src="../../javascript/jquery.min.js"></script>
     <script src="../../javascript/bootstrap.js"></script>
+    <script src="../../javascript/getArticle.js" charset="utf-8"></script>
     <script type="text/javascript">
-        function setRecommend (genre, goalId, callback) {
-            if (typeof(Storage) !== "undefined") {
-                recommendMessageJson = JSON.parse(localStorage[genre]);
+        function setRecommend (genre, index, goalId, callback) {
+            if (typeof(Storage)) {
+                var recommendMessageArr = JSON.parse(localStorage[genre]);;
+                if (index ==  recommendMessageArr.length - 1) {
+                    index = 0;
+                }
                 var recommendMessageStr = "";
-                for (var unitRecommendMessage of recommendMessageJson) {
+                for (var unitRecommendMessage of recommendMessageArr[index]) {
                     if(callback){
                         recommendMessageStr += callback(unitRecommendMessage);
                     }
                 }
-                jQuery("#" + goalId).append(recommendMessageStr);
+                jQuery("#" + goalId).html(recommendMessageStr);
+                return index;
             }
         }
     </script>
@@ -171,7 +176,7 @@ session_start();
             }
         }
 
-        window.onbeforeunload = function (evnet) {
+        function sendView () {
             jQuery.ajax({
                 type: 'POST',
                 async: false,
@@ -180,13 +185,23 @@ session_start();
                     uid: 0,
                     view: view,
                 },
-                error: function () {
+                success: function (result,status,xhr) {
+                    console.log(result);
+                    console.log(status);
+                    console.log(xhr);
+                },
+                error: function (xhr,status,error) {
                     if (typeof(Storage) !== "undefined") {
                         localStorage["<?php echo $_SESSION['ip'] ?>".replaceAll(".", "-")] = JSON.stringify(view);
                     }
+                    console.log(status);
+                    console.log(error);
                 }
             });
         }
+
+        // window.onbeforeunload = function (evnet) {
+        // }
     </script>
 </body>
 

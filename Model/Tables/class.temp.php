@@ -1,6 +1,6 @@
 <?php
 /**
- * description  temp表数据库sql预处理架设，
+ * description  Temp表数据库sql预处理架设，
  * @context PHP 5
  * @version 3.0
  * @author liyusky
@@ -46,17 +46,17 @@ class Temp extends DateBase
             'preRegistDeleteDelay'  => null,                //预注册时立刻删除预注册用户信息
         );
         $this->device    = array(           //数据库预处理状态明细
-            'preRegistInsert'       => array(         //将注册数据插入temp表
+            'preRegistInsert'       => array(         //将注册数据插入Temp表
                 'mark' => true,
                 'sql'  => '
-                    INSERT INTO temp (username, password, email, ip, longitude, latitude)
+                    INSERT INTO Temp (username, password, email, ip, longitude, latitude)
                     VALUES (:username, :password, :email, :ip, :longitude, :latitude);
                 ',
                 'data' => array('username', 'password', 'email', 'ip', 'longitude', 'latitude'),
             ),
             'preRegistSelect'       => array(         //查询token
                 'mark' => true,
-                'sql'  => 'SELECT * FROM temp WHERE username = :username OR email = :email;',
+                'sql'  => 'SELECT * FROM Temp WHERE username = :username OR email = :email;',
                 'data' => array('username', 'email'),
             ),
             'preRegistDeleteDelay'  => array(         //定时删除预注册数据
@@ -84,7 +84,7 @@ class Temp extends DateBase
             CREATE EVENT delete" . $Username . "
                 ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 30 MINUTE
                 ON COMPLETION NOT PRESERVE
-                DO DELETE FROM temp WHERE username = :username;
+                DO DELETE FROM Temp WHERE username = :username;
         ";
         $this->loadSQL('preRegistDeleteDelay', $this->device['preRegistDeleteDelay']);
     }
