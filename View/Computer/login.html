@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>鲤鱼旗</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
+    <link rel="stylesheet" href="./css/general.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row index-main">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div class="text-center top-margin">
+            <img src="./images/logo.svg" alt="">
+            <h4>一起快乐地讨论吧！</h4>
+          </div>
+          <div>
+            <ul class="nav-pills login-margin list-unstyled text-center nav">
+              <a class="active btn btn-link btn-beautify view-color" id="switch-in" data-switch="1" data-toggle="tab" href="#signup">登录</a>
+              <a class="btn btn-link btn-beautify leave-color" id="switch-up" data-switch="0" data-toggle="tab" href="#signin">注册</a>
+            </ul>
+            <div class="tab-content login-margin">
+              <div class="tab-pane fade in active" id="signup">
+                <form>
+                  <input class="form-control login-margin" id="in-username" name="username" type="text" placeholder="用户名">
+                  <input class="form-control login-margin" id="in-password" name="password" type="text" placeholder="密码">
+                  <a class="btn btn-primary form-control login-margin" name="登录" type="button" onclick="login()">登录</a>
+                </form>
+                <p>
+                  <a class="" href="#">手机验证码登录</a>
+                  <a class="f-right" href="#">无法登录？</a>
+                </p>
+                <div class="row">
+                  <div class="col-md-4">
+                    <a href="javascript:void(0)" onclick="openBox()" style="line-height:31px;">社交账号登录</a>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="overflow-hidden none row" id="hide" style="height:25px;width:0;">
+                      <a class="iconfont icon-weixin icon col-md-4" href="#"></a>
+                      <a class="iconfont icon-weibo icon col-md-4" href="#"></a>
+                      <a class="iconfont icon-qq icon col-md-4" href="#"></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="signin">
+                <form>
+                  <input class="form-control login-margin" id="up-username" name="username" type="text" placeholder="用户名">
+                  <input class="form-control login-margin" id="mail" name="mail" type="text" placeholder="邮箱">
+                  <input class="form-control login-margin" id="up-password" name="password" type="text" placeholder="密码">
+                  <a class="btn btn-primary form-control login-margin" name="注册" type="button" onclick="logup()">注册</a>
+                </form>
+                <div>
+                  <p>
+                    <span>点击&#91;注册&#93;按钮，即代表你同意</span>
+                    <a href="#">《本站协议》</a>
+                  </p>
+                </div>
+              </div>
+              <a class="btn btn-default form-control download hidden">下载APP</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+      <div class="footer">
+        <p class="text-center keep-bottom">
+          <span>&copy; 2016 鲤鱼旗</span>
+          <span class="dot">·</span>
+          <a target="_blank" href="#">发现</a>
+          <span class="dot">·</span>
+          <a target="_blank" href="#">联系我们</a>
+          <br>
+          <a href="#" target="_blank">京 ICP 证 110745 号</a>
+          <span class="dot">·</span>
+          <span>京公网安备 11010802010035 号</span>
+          <span class="dot">·</span>
+          <a href="#" target="_blank">出版物经营许可证</a>
+        </p>
+      </div>
+    </div>
+    <script src="./javascript/jquery.min.js"></script>
+    <script src="./javascript/bootstrap.js"></script>
+    <script>
+        /**
+        * [检查密码格式]
+        * @param  {[string]} userPassword [从密码输入框获得的值]
+        * @return {[boolean]}              [决定输入的值是否提交]
+        */
+          function checkPassword(userPassword){
+              var reg = /[a-zA-Z0-9]{6,12}/; // 数字字母
+              return reg.test(userPassword);
+            }
+        /**
+         * []检查用户名格式]
+         * @param  {[string]} userName [从用户名输入框获得的值]
+         * @return {[boolean]}          [决定输入的值是否提交]
+         */
+         function checkUserName(userName){
+             var reg = /(^[a-zA-Z])([a-zA-Z0-9]{5,11})/; // 开头所有字母，中间字母数字
+             return reg.test(userName);
+           }
+        /**
+         * [检查email地址是否正确]
+         * @param  {[string]} mailAddress [从email输入框获得的值]
+         * @return {[boolean]}             [决定输入的值是否提交]
+         */
+         function checkMail(mailAddress){
+         var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+         return reg.test(mailAddress);
+           }
+        /**
+         * [判断用户名密码格式]
+         * @return                         {[boolean]} [允许或阻止数据的提交]
+         * @method
+         * @author
+         * @version
+         * @datetime
+         */
+        function login(){
+          var userName = document.getElementById('in-username').value;
+          if(!checkUserName(userName))
+          {
+              alert("用户名不正确！")
+              return false;
+          }
+          var password = document.getElementById('in-password').value;
+          if(!checkPassword(password))
+          {
+              alert("密码不正确！")
+              return false;
+          }
+        }
+        /**
+         * [此函数在注册时确定输入格式的正确与否]
+         * @return {[boolean]} [返回的布尔值视情况而提交]
+         */
+        function logup(){
+            var userName = document.getElementById('up-username').value;
+            if(!checkUserName(userName))
+            {
+                alert("用户名不正确！")
+                return false;
+            }
+            var password = document.getElementById('up-password').value;
+            if(!checkPassword(password))
+            {
+                alert("密码不正确！")
+                return false;
+            }
+            var mailAddress =document.getElementById('mail').value;
+            if(!checkMail(mailAddress))
+            {
+              alert("邮箱地址不正确！")
+              return false;
+            }
+        }
+        /**
+         * [此函数隐藏或开启社交媒体登录选项框]
+         * @return {[none]} [仅仅发生一种行为]
+         */
+        function openBox(){
+            if ($("#hide").attr('class') == "overflow-hidden none row"){
+                $("#hide").attr("class","overflow-hidden inline-block");
+                $("#hide").animate({width:'150px'},"slow");
+            }
+            else {
+                $("#hide").animate({width:'0'},"slow");
+                $("#hide").attr("class","overflow-hidden none row");
+            }
+        }
+        /**
+         * [此函数执行点击登录、注册两按钮时颜色切换]
+         * @return {[none]} 
+         */
+        function logSwitch(){
+            //点击登录按钮后所执行
+            $("#switch-in").click(function() {
+                $(this).attr({
+                    "data-switch" : "1",
+                    "class" : "active btn btn-link btn-beautify view-color"
+                });
+                $("#switch-up").attr({
+                    "data-switch" : "0",
+                    "class" : "btn btn-link btn-beautify leave-color"
+                });
+            });
+            //点击注册按钮后所执行
+            $("#switch-up").click(function() {
+                $(this).attr({
+                    "data-switch" : "1",
+                    "class" : "btn btn-link btn-beautify view-color"
+                });
+                $("#switch-in").attr({
+                    "data-switch" : "0",
+                    "class" : "active btn btn-link btn-beautify leave-color"
+                });
+            });
+        }
+        logSwitch();
+    </script>
+  </body>
+</html>
